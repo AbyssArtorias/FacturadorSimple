@@ -1,0 +1,26 @@
+package Obj;
+
+import java.io.Serializable;
+
+public class Vendedor extends Persona implements Serializable {
+
+	public String password;
+
+	public Vendedor(String id, String nombre, String contraseña) {
+		super(id, nombre);
+		this.password = contraseña;
+	}
+
+	public Vendedor(String id, String nombre) {
+		super(id, nombre);
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+}
