@@ -26,15 +26,30 @@ public class Main {
             e.printStackTrace();
         }
         try {
-            fl = new File("C:/Kardez.dat");
-            if (fl.exists()) {
-                System.out.println("Archivo existe");
-                ois = new ObjectInputStream(new FileInputStream("C:/Kardez.dat"));
-                krdx = (Kardex) ois.readObject();
-            } else {
-                bf = new BufferedWriter(new FileWriter(fl));
-                new CrearInstancia().setVisible(true);
-                System.out.println("Archivo creado con exito");
+            String os = System.getProperty("os.name");
+            String us = System.getProperty("user.home");
+            if ("Linux".equals(os)) {
+                fl = new File(us + "/Documentos/Kardez.dat");
+                if (fl.exists()) {
+                    System.out.println("Archivo existe");
+                    ois = new ObjectInputStream(new FileInputStream(us + "/Documentos/Kardez.dat"));
+                    krdx = (Kardex) ois.readObject();
+                } else {
+                    bf = new BufferedWriter(new FileWriter(fl));
+                    new CrearInstancia().setVisible(true);
+                    //System.out.println("Archivo creado con exito");
+                }
+            } else if ("Windows".equals(os)) {
+                fl = new File("C:/Kardez.dat");
+                if (fl.exists()) {
+                    System.out.println("Archivo existe");
+                    ois = new ObjectInputStream(new FileInputStream("C:/Kardez.dat"));
+                    krdx = (Kardex) ois.readObject();
+                } else {
+                    bf = new BufferedWriter(new FileWriter(fl));
+                    new CrearInstancia().setVisible(true);
+                    System.out.println("Archivo creado con exito");
+                }
             }
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);

@@ -7,8 +7,10 @@ package Gui;
 
 import Obj.Kardex;
 import Obj.Vendedor;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +20,8 @@ public class CrearInstancia extends javax.swing.JFrame {
 
     private Kardex krdx = null;
     private Vendedor vnddr = null;
+    private String us = System.getProperty("user.home");
+    private File fl;
 
     /**
      * Creates new form CrearInstancia
@@ -25,6 +29,16 @@ public class CrearInstancia extends javax.swing.JFrame {
     public CrearInstancia() {
         initComponents();
         this.setLocationRelativeTo(null);
+        init();
+    }
+
+    public void init() {
+        String os = System.getProperty("os.name");
+        if ("Linux".equals(os)) {
+            fl = new File(us + "/Documentos/Kardez.dat");
+        } else if ("Windows".equals(os)) {
+            fl = new File("C:/Kardez.dat");
+        }
     }
 
     /**
@@ -94,6 +108,11 @@ public class CrearInstancia extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtCancelar(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,6 +163,15 @@ public class CrearInstancia extends javax.swing.JFrame {
             Logger.getLogger(CrearInstancia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_EvtAceptar
+
+    private void EvtCancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtCancelar
+        if (fl.delete()) {
+            JOptionPane.showMessageDialog(rootPane, "Operacion cancelada", "Crear instancia", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "La operacion no puede ser cancelada", "Crear instancia", JOptionPane.ERROR_MESSAGE);
+        }
+        System.exit(0);
+    }//GEN-LAST:event_EvtCancelar
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
