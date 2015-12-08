@@ -21,6 +21,7 @@ public class CrearInstancia extends javax.swing.JFrame {
     private Kardex krdx = null;
     private Vendedor vnddr = null;
     private String us = System.getProperty("user.home");
+    private String os[] = System.getProperty("os.name").split(" ");
     private File fl;
 
     /**
@@ -28,16 +29,16 @@ public class CrearInstancia extends javax.swing.JFrame {
      */
     public CrearInstancia() {
         initComponents();
-        this.setLocationRelativeTo(null);
         init();
+        this.setLocationRelativeTo(null);
     }
 
     public void init() {
-        String os = System.getProperty("os.name");
-        if ("Linux".equals(os)) {
+        System.out.println(os[0]);
+        if ("Linux".equals(os[0])) {
             fl = new File(us + "/Documentos/Kardez.dat");
-        } else if ("Windows".equals(os)) {
-            fl = new File("C:/Kardez.dat");
+        } else {
+            fl = new File("C:\\Kardez.dat");
         }
     }
 
@@ -168,7 +169,8 @@ public class CrearInstancia extends javax.swing.JFrame {
         if (fl.delete()) {
             JOptionPane.showMessageDialog(rootPane, "Operacion cancelada", "Crear instancia", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(rootPane, "La operacion no puede ser cancelada", "Crear instancia", JOptionPane.ERROR_MESSAGE);
+            String ms = "Operacion cancelada. Recuerde eliminar el archivo C:\\Kardez.dat";
+            JOptionPane.showMessageDialog(rootPane, ms, "Crear instancia", JOptionPane.ERROR_MESSAGE);
         }
         System.exit(0);
     }//GEN-LAST:event_EvtCancelar
