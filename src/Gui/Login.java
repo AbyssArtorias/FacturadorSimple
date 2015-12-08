@@ -103,8 +103,8 @@ public class Login extends javax.swing.JFrame {
 
     private void EvtAceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAceptar
         try {
-            txtfUser.setText("");
             Vendedor vtmp = (Vendedor) krdx.findVendedor(txtfUser.getText());
+            txtfUser.setText("");
             appRun = new App(krdx, vtmp);
             appRun.setVisible(true);
             this.setVisible(false);
