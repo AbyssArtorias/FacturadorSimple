@@ -410,6 +410,7 @@ public class RealizarVenta extends javax.swing.JPanel {
                 this.krdx.add(ventTemp);
                 this.appRun.vents.tblTodasLasVentas.updateUI();
                 this.krdx.siguienteIdVenta();
+                txtfIdVenta.setText(this.krdx.getIdVenta() + "");
                 newVenta();
             }
         } catch (Exception ex) {
