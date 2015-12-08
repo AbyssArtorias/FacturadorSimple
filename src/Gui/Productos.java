@@ -110,6 +110,12 @@ public class Productos extends javax.swing.JPanel {
 
         lblNuevoCosto.setText("Costo:");
 
+        txtfNuevoCosto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtAddProducto(evt);
+            }
+        });
+
         btnNuevoProducto.setText("Guardar");
         btnNuevoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

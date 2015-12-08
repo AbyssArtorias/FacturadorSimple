@@ -93,6 +93,12 @@ public class Clientes extends javax.swing.JPanel {
 
         lblNuevoNombre.setText("Nombre:");
 
+        txtfNuevoNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtNuevoCliente(evt);
+            }
+        });
+
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
