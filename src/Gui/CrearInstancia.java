@@ -72,6 +72,12 @@ public class CrearInstancia extends javax.swing.JFrame {
 
         lblEmpleadoNombre.setText("Nombre del Empleado:");
 
+        txtfEmpleadoNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtAceptar(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
