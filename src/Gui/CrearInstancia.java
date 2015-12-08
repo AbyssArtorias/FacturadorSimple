@@ -7,9 +7,11 @@ package Gui;
 
 import Obj.Kardex;
 import Obj.Vendedor;
+import java.awt.Image;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,6 +32,8 @@ public class CrearInstancia extends javax.swing.JFrame {
     public CrearInstancia() {
         initComponents();
         init();
+        Image icon = new ImageIcon(getClass().getResource("/Media/001.png")).getImage();
+        this.setIconImage(icon);
         this.setLocationRelativeTo(null);
     }
 

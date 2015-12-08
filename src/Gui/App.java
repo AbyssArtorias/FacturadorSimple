@@ -7,10 +7,12 @@ package Gui;
 
 import Obj.Kardex;
 import Obj.Vendedor;
+import java.awt.Image;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -38,6 +40,8 @@ public class App extends javax.swing.JFrame {
         this.clints = new Clientes(this.krdx, this.venddr);
         this.vents = new Ventas(this.krdx, this.venddr);
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
+        this.setIconImage(icon);
         this.setLocationRelativeTo(null);
         tbpPrincipal.add(rVenta);
         tbpPrincipal.setTitleAt(0, "Realizar venta");
