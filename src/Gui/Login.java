@@ -5,10 +5,12 @@
  */
 package Gui;
 
-import Obj.Kardex;
 import Obj.Empleado;
+import Obj.Kardex;
+import java.awt.Image;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,7 +20,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     private Kardex krdx = null;
-    private App appRun = null;
+    private MainFrame appRun = null;
 
     /**
      *
@@ -27,6 +29,8 @@ public class Login extends javax.swing.JFrame {
     public Login(Kardex kardex) {
         this.krdx = kardex;
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/Media/002.png")).getImage();
+        this.setIconImage(icon);
         this.setLocationRelativeTo(null);
     }
 
@@ -101,7 +105,7 @@ public class Login extends javax.swing.JFrame {
         try {
             Empleado vtmp = (Empleado) krdx.findEmpleado(txtfUser.getText());
             txtfUser.setText("");
-            appRun = new App(krdx, vtmp);
+            appRun = new MainFrame(krdx, vtmp);
             appRun.setVisible(true);
             this.setVisible(false);
         } catch (Exception e) {

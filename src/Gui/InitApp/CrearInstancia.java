@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Gui;
+package Gui.InitApp;
 
-import Obj.Kardex;
+import Gui.Login;
 import Obj.Empleado;
+import Obj.Kardex;
+import java.awt.Image;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,6 +32,8 @@ public class CrearInstancia extends javax.swing.JFrame {
      */
     public CrearInstancia() {
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/Media/001.png")).getImage();
+        this.setIconImage(icon);
         init();
         this.setLocationRelativeTo(null);
     }

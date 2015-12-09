@@ -6,7 +6,6 @@
 package Gui;
 
 import Obj.Kardex;
-import Obj.Empleado;
 import Obj.Venta;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -20,23 +19,20 @@ import javax.swing.table.AbstractTableModel;
 public class Ventas extends javax.swing.JPanel {
 
     private Kardex krdx = null;
-    private Empleado venddr = null;
 
     /**
      *
      * @param kardex
-     * @param vendedor
      */
-    public Ventas(Kardex kardex, Empleado vendedor) {
+    public Ventas(Kardex kardex) {
         this.krdx = kardex;
-        this.venddr = vendedor;
         initComponents();
         init();
     }
 
     public void init() {
-        tblTodasLasVentas.setModel(new AbstractTableModel() {
-            String[] nmColumnas = {"Fecha", "idVenta", "Vendedor", "Cliente", "Total"};
+        this.tblTodas.setModel(new AbstractTableModel() {
+            String[] nmColumnas = {"Id", "Fecha", "Cliente", "Total"};
 
             @Override
             public String getColumnName(int column) {
@@ -46,11 +42,11 @@ public class Ventas extends javax.swing.JPanel {
             @Override
             public int getRowCount() {
                 try {
-                    if (!krdx.findVentas().isEmpty()) {
-                        return krdx.findVentas().size();
+                    if (!krdx.getVentas().isEmpty()) {
+                        return krdx.getVentas().size();
                     }
-                } catch (Exception ex) {
-                    Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception e) {
+                    Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, e);
                 }
                 return 0;
             }
@@ -62,24 +58,20 @@ public class Ventas extends javax.swing.JPanel {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
                 try {
-                    Venta vtmp = krdx.findVentas().get(rowIndex);
+                    Venta vtpm = (Venta) krdx.getVentas().get(rowIndex);
+                    SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
                     if (columnIndex == 0) {
-                        return f.format(vtmp.getFecha());
+                        return vtpm.getId();
                     } else if (columnIndex == 1) {
-                        return vtmp.getIdVenta();
+                        return f.format(vtpm.getFecha());
                     } else if (columnIndex == 2) {
-                        return vtmp.getVendedor().toString();
+                        return vtpm.getCliente().toString();
                     } else if (columnIndex == 3) {
-                        if (vtmp.getCliente() == null) {
-                            return "Anonimo";
-                        }
-                        return vtmp.getCliente().toString();
-                    } else if (columnIndex == 4) {
-                        return vtmp.getSubtotal();
+                        return vtpm.getSubtotal();
                     }
                 } catch (Exception e) {
+                    Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, e);
                 }
                 return "";
             }
@@ -95,15 +87,11 @@ public class Ventas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlTodasLasVentas = new javax.swing.JPanel();
-        scpTodasLasVentas = new javax.swing.JScrollPane();
-        tblTodasLasVentas = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblTodas = new javax.swing.JTable();
+        lblTodas = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(472, 600));
-
-        pnlTodasLasVentas.setBorder(javax.swing.BorderFactory.createTitledBorder("Todas las ventas"));
-
-        tblTodasLasVentas.setModel(new javax.swing.table.DefaultTableModel(
+        tblTodas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -114,24 +102,9 @@ public class Ventas extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        scpTodasLasVentas.setViewportView(tblTodasLasVentas);
+        jScrollPane1.setViewportView(tblTodas);
 
-        javax.swing.GroupLayout pnlTodasLasVentasLayout = new javax.swing.GroupLayout(pnlTodasLasVentas);
-        pnlTodasLasVentas.setLayout(pnlTodasLasVentasLayout);
-        pnlTodasLasVentasLayout.setHorizontalGroup(
-            pnlTodasLasVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTodasLasVentasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scpTodasLasVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlTodasLasVentasLayout.setVerticalGroup(
-            pnlTodasLasVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTodasLasVentasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scpTodasLasVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        lblTodas.setText("Todas las ventas");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -139,22 +112,28 @@ public class Ventas extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlTodasLasVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTodas)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlTodasLasVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTodas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel pnlTodasLasVentas;
-    private javax.swing.JScrollPane scpTodasLasVentas;
-    public javax.swing.JTable tblTodasLasVentas;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTodas;
+    private javax.swing.JTable tblTodas;
     // End of variables declaration//GEN-END:variables
 }

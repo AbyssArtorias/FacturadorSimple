@@ -5,21 +5,22 @@
  */
 package Gui;
 
-import Obj.Kardex;
 import Obj.Empleado;
+import Obj.Kardex;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author Dildo__Queen
  */
-public class App extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame {
 
     private Kardex krdx = null;
     private Empleado venddr = null;
-    public RealizarVenta rVenta = null;
+    private RealizarVenta rVenta = null;
     private Productos prodcts = null;
-    private Clientes clints = null;
-    public Ventas vents = null;
+    private Ventas vents = null;
 
     /**
      *
@@ -27,23 +28,22 @@ public class App extends javax.swing.JFrame {
      * @param vendedor
      * @throws Exception
      */
-    public App(Kardex kardex, Empleado vendedor) throws Exception {
+    public MainFrame(Kardex kardex, Empleado vendedor) throws Exception {
         this.krdx = kardex;
         this.venddr = vendedor;
         this.rVenta = new RealizarVenta(this.krdx, this.venddr, this);
-        this.prodcts = new Productos(this.krdx, this.venddr, this);
-        this.clints = new Clientes(this.krdx, this.venddr);
-        this.vents = new Ventas(this.krdx, this.venddr);
+        this.prodcts = new Productos(this.krdx, this.venddr);
+        this.vents = new Ventas(this.krdx);
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
+        this.setIconImage(icon);
         this.setLocationRelativeTo(null);
         tbpPrincipal.add(rVenta);
         tbpPrincipal.setTitleAt(0, "Realizar venta");
         tbpPrincipal.add(prodcts);
         tbpPrincipal.setTitleAt(1, "Productos");
-        tbpPrincipal.add(clints);
-        tbpPrincipal.setTitleAt(2, "Clientes");
         tbpPrincipal.add(vents);
-        tbpPrincipal.setTitleAt(3, "Ventas");
+        tbpPrincipal.setTitleAt(2, "Ventas");
     }
 
     /**
@@ -59,6 +59,8 @@ public class App extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(krdx.getNombre());
+        setMinimumSize(new java.awt.Dimension(600, 715));
+        setPreferredSize(new java.awt.Dimension(600, 715));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
