@@ -12,7 +12,6 @@ import javax.persistence.Persistence;
 public class Kardex implements Serializable {
 
     private String nombre;
-    private int idVenta = 1;
 
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("FSPU");
 
@@ -35,25 +34,13 @@ public class Kardex implements Serializable {
         this.nombre = nombre;
     }
 
-    public void setIdVenta(int idVenta) {
-        this.idVenta = idVenta;
-    }
-
     public String getNombre() {
         return nombre;
-    }
-
-    public int getIdVenta() {
-        return idVenta;
     }
 
     @Override
     public String toString() {
         return "Kardex: " + nombre;
-    }
-
-    public void siguienteIdVenta() {
-        this.idVenta++;
     }
 
     public void add(Empleado vendedor) throws Exception {
@@ -80,7 +67,7 @@ public class Kardex implements Serializable {
         return clienteJPA.findCliente(id);
     }
 
-    public List<Cliente> findClientes() {
+    public List<Cliente> getClientes() {
         return clienteJPA.findClienteEntities();
     }
 
@@ -88,15 +75,15 @@ public class Kardex implements Serializable {
         return productoJPA.findProducto(codigo);
     }
 
-    public List<Producto> findProductos() throws Exception {
+    public List<Producto> getProductos() throws Exception {
         return productoJPA.findProductoEntities();
     }
 
-    public Venta findVenta(String id) throws Exception {
+    public Venta findVenta(Long id) throws Exception {
         return ventaJPA.findVenta(id);
     }
 
-    public List<Venta> findVentas() throws Exception {
+    public List<Venta> getVentas() throws Exception {
         return ventaJPA.findVentaEntities();
     }
 

@@ -5,8 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -17,7 +20,8 @@ import javax.persistence.TemporalType;
 public class Venta implements Serializable {
 
     @Id
-    private String idVenta;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @OneToOne
     private Empleado vendedor;
     @OneToOne(optional = true)
@@ -29,23 +33,21 @@ public class Venta implements Serializable {
     @Column
     private double subtotal = 0;
 
-    public Venta(String id, Empleado persona, Cliente cliente) {
-        this.idVenta = id;
+    public Venta(Empleado persona, Cliente cliente, Date date) {
         this.vendedor = persona;
         this.cliente = cliente;
-        this.fecha = new Date();
+        this.fecha = date;
     }
 
-    public Venta(String id) {
-        this.idVenta = id;
-        this.fecha = new Date();
+    public Venta(Date date) {
+        this.fecha = date;
     }
 
     public Venta() {
     }
 
-    public void setIdVenta(String idVenta) {
-        this.idVenta = idVenta;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setVendedor(Empleado vendedor) {
@@ -68,8 +70,8 @@ public class Venta implements Serializable {
         this.subtotal = subtotal;
     }
 
-    public String getIdVenta() {
-        return idVenta;
+    public Long getId() {
+        return id;
     }
 
     public Empleado getVendedor() {
@@ -94,29 +96,21 @@ public class Venta implements Serializable {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((idVenta == null) ? 0 : idVenta.hashCode());
-        return result;
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Venta other = (Venta) obj;
-        if (idVenta == null) {
-            if (other.idVenta != null) {
-                return false;
-            }
-        } else if (!idVenta.equals(other.idVenta)) {
+        final Venta other = (Venta) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -125,7 +119,7 @@ public class Venta implements Serializable {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return idVenta + " : " + vendedor + " - " + cliente + " : " + sdf.format(fecha) + " = " + subtotal;
+        return id + " : " + vendedor + " - " + cliente + " : " + sdf.format(fecha) + " = " + subtotal;
     }
 
     public void add(Item item) throws Exception {
