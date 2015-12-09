@@ -2,7 +2,6 @@ package Obj;
 
 import Jpa.ClienteJpaController;
 import Jpa.EmpleadoJpaController;
-import Jpa.PersonaJpaController;
 import Jpa.ProductoJpaController;
 import Jpa.VentaJpaController;
 import java.io.Serializable;
