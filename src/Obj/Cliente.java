@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class Cliente extends Persona implements Serializable {
 
-	public Cliente(String id, String nombre) {
-		super(id, nombre);
-	}
-        
-        public Cliente(){
-            super();
-        }
+    public Cliente(String id, String nombre) throws Exception {
+        super(id, nombre);
+    }
+
+    public Cliente() {
+        super();
+    }
 
 }
