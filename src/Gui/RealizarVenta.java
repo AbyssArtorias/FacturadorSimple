@@ -9,10 +9,9 @@ import Obj.Cliente;
 import Obj.Item;
 import Obj.Kardex;
 import Obj.Producto;
-import Obj.Vendedor;
+import Obj.Empleado;
 import Obj.Venta;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,7 +24,7 @@ import javax.swing.table.AbstractTableModel;
 public class RealizarVenta extends javax.swing.JPanel {
 
     private Kardex krdx = null;
-    private Vendedor venddr = null;
+    private Empleado venddr = null;
     private Cliente clnt = null;
     private Venta ventTemp = null;
     public App appRun = null;
@@ -36,8 +35,9 @@ public class RealizarVenta extends javax.swing.JPanel {
      * @param kardex
      * @param vendedor
      * @param app
+     * @throws Exception
      */
-    public RealizarVenta(Kardex kardex, Vendedor vendedor, App app) {
+    public RealizarVenta(Kardex kardex, Empleado vendedor, App app) throws Exception {
         this.krdx = kardex;
         this.venddr = vendedor;
         this.appRun = app;
@@ -46,12 +46,12 @@ public class RealizarVenta extends javax.swing.JPanel {
         init();
     }
 
-    public void init() {
+    public void init() throws Exception {
         txtfIdVenta.setText(this.krdx.getIdVenta() + "");
         txtfVendedorId.setText(this.venddr.getIdentificacion());
         txtfVendedorNombre.setText(this.venddr.getNombre());
         cmbProducto.removeAllItems();
-        for (Producto ptmp : this.krdx.getProductos()) {
+        for (Producto ptmp : this.krdx.findProductos()) {
             cmbProducto.addItem(ptmp);
         }
         tblVentas.setModel(new AbstractTableModel() {
@@ -447,7 +447,7 @@ public class RealizarVenta extends javax.swing.JPanel {
         try {
             if (txtfBuscarProducto.getText().equals("".trim())) {
                 cmbProducto.removeAllItems();
-                for (Producto ptmp : this.krdx.getProductos()) {
+                for (Producto ptmp : this.krdx.findProductos()) {
                     cmbProducto.addItem(ptmp);
                 }
             }
@@ -463,9 +463,13 @@ public class RealizarVenta extends javax.swing.JPanel {
     private void EvtFindProductoEmpty(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EvtFindProductoEmpty
         if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
             if (txtfBuscarProducto.getText().equals("".trim())) {
-                cmbProducto.removeAllItems();
-                for (Producto ptmp : this.krdx.getProductos()) {
-                    cmbProducto.addItem(ptmp);
+                try {
+                    cmbProducto.removeAllItems();
+                    for (Producto ptmp : this.krdx.findProductos()) {
+                        cmbProducto.addItem(ptmp);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(RealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

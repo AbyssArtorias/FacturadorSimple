@@ -7,7 +7,7 @@ package Gui;
 
 import Obj.Kardex;
 import Obj.Producto;
-import Obj.Vendedor;
+import Obj.Empleado;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,7 +20,7 @@ import javax.swing.table.AbstractTableModel;
 public class Productos extends javax.swing.JPanel {
 
     private Kardex krdx = null;
-    private Vendedor venddr = null;
+    private Empleado venddr = null;
     private App appRun = null;
 
     /**
@@ -28,7 +28,7 @@ public class Productos extends javax.swing.JPanel {
      * @param kardex
      * @param vendedor
      */
-    public Productos(Kardex kardex, Vendedor vendedor, App app) {
+    public Productos(Kardex kardex, Empleado vendedor, App app) throws Exception {
         this.krdx = kardex;
         this.venddr = vendedor;
         this.appRun = app;
@@ -36,7 +36,7 @@ public class Productos extends javax.swing.JPanel {
         init();
     }
 
-    public void init() {
+    public void init() throws Exception {
         tblTodosLosProductos.setModel(new AbstractTableModel() {
             String[] nmColumnas = {"Codigo", "Nombre", "Total", "Descripcion"};
 
@@ -47,10 +47,14 @@ public class Productos extends javax.swing.JPanel {
 
             @Override
             public int getRowCount() {
-                if (krdx.getProductos().isEmpty()) {
-                    return 0;
+                try {
+                    if (!krdx.findProductos().isEmpty()) {
+                        return krdx.findProductos().size();
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                return krdx.getProductos().size();
+                return 0;
             }
 
             @Override
@@ -60,15 +64,20 @@ public class Productos extends javax.swing.JPanel {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                Producto ptmp = krdx.getProductos().get(rowIndex);
-                if (columnIndex == 0) {
-                    return ptmp.getCodigo();
-                } else if (columnIndex == 1) {
-                    return ptmp.getNombre();
-                } else if (columnIndex == 2) {
-                    return ptmp.getCosto();
-                } else if (columnIndex == 3) {
-                    return ptmp.getDescripcion();
+                Producto ptmp;
+                try {
+                    ptmp = krdx.findProductos().get(rowIndex);
+                    if (columnIndex == 0) {
+                        return ptmp.getCodigo();
+                    } else if (columnIndex == 1) {
+                        return ptmp.getNombre();
+                    } else if (columnIndex == 2) {
+                        return ptmp.getCosto();
+                    } else if (columnIndex == 3) {
+                        return ptmp.getDescripcion();
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 return "";
             }

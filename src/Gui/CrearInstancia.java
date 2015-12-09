@@ -6,7 +6,7 @@
 package Gui;
 
 import Obj.Kardex;
-import Obj.Vendedor;
+import Obj.Empleado;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class CrearInstancia extends javax.swing.JFrame {
 
     private Kardex krdx = null;
-    private Vendedor vnddr = null;
+    private Empleado vnddr = null;
     private String us = System.getProperty("user.home");
     private String os[] = System.getProperty("os.name").split(" ");
     private File fl;
@@ -40,6 +40,10 @@ public class CrearInstancia extends javax.swing.JFrame {
         } else {
             fl = new File("C:\\Kardez.dat");
         }
+    }
+
+    public Kardex getKrdx() {
+        return krdx;
     }
 
     /**
@@ -162,7 +166,7 @@ public class CrearInstancia extends javax.swing.JFrame {
     private void EvtAceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAceptar
         try {
             krdx = new Kardex(txtfNombreEmpresa.getText().trim());
-            vnddr = new Vendedor(txtfEmpleadoId.getText().trim(), txtfEmpleadoNombre.getText().trim());
+            vnddr = new Empleado(txtfEmpleadoId.getText().trim(), txtfEmpleadoNombre.getText().trim());
             krdx.add(vnddr);
             new Login(krdx).setVisible(true);
             this.setVisible(false);

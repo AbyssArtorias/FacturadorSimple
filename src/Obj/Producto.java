@@ -1,12 +1,20 @@
 package Obj;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
 public class Producto implements Serializable {
 
+    @Id
     private String codigo;
+    @Column(length = 50, nullable = false)
     private String nombre;
+    @Column(length = 255, nullable = false)
     private String descripcion;
+    @Column
     private double costo;
 
     public Producto(String codigo, String nombre, String descripcion, float costo) throws Exception {
@@ -17,6 +25,9 @@ public class Producto implements Serializable {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.costo = costo;
+    }
+
+    public Producto() {
     }
 
     public void setCodigo(String codigo) {

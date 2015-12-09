@@ -6,11 +6,7 @@
 package Gui;
 
 import Obj.Kardex;
-import Obj.Vendedor;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import Obj.Empleado;
 
 /**
  *
@@ -19,7 +15,7 @@ import java.io.ObjectOutputStream;
 public class App extends javax.swing.JFrame {
 
     private Kardex krdx = null;
-    private Vendedor venddr = null;
+    private Empleado venddr = null;
     public RealizarVenta rVenta = null;
     private Productos prodcts = null;
     private Clientes clints = null;
@@ -29,8 +25,9 @@ public class App extends javax.swing.JFrame {
      *
      * @param kardex
      * @param vendedor
+     * @throws Exception
      */
-    public App(Kardex kardex, Vendedor vendedor) {
+    public App(Kardex kardex, Empleado vendedor) throws Exception {
         this.krdx = kardex;
         this.venddr = vendedor;
         this.rVenta = new RealizarVenta(this.krdx, this.venddr, this);
@@ -47,48 +44,6 @@ public class App extends javax.swing.JFrame {
         tbpPrincipal.setTitleAt(2, "Clientes");
         tbpPrincipal.add(vents);
         tbpPrincipal.setTitleAt(3, "Ventas");
-        this.addWindowListener(new WindowListener() {
-
-            @Override
-            public void windowOpened(WindowEvent e) {
-            }
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                ObjectOutputStream oos = null;
-                try {
-                    oos = new ObjectOutputStream(new FileOutputStream("C:/Kardez.dat"));
-                    oos.writeObject(krdx);
-                } catch (Exception ee) {
-                    ee.printStackTrace();
-                }
-            }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {
-                
-            }
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-                
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-                
-            }
-        });
     }
 
     /**

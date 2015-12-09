@@ -6,9 +6,11 @@
 package Gui;
 
 import Obj.Kardex;
-import Obj.Vendedor;
+import Obj.Empleado;
 import Obj.Venta;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -18,14 +20,14 @@ import javax.swing.table.AbstractTableModel;
 public class Ventas extends javax.swing.JPanel {
 
     private Kardex krdx = null;
-    private Vendedor venddr = null;
+    private Empleado venddr = null;
 
     /**
      *
      * @param kardex
      * @param vendedor
      */
-    public Ventas(Kardex kardex, Vendedor vendedor) {
+    public Ventas(Kardex kardex, Empleado vendedor) {
         this.krdx = kardex;
         this.venddr = vendedor;
         initComponents();
@@ -43,10 +45,14 @@ public class Ventas extends javax.swing.JPanel {
 
             @Override
             public int getRowCount() {
-                if (krdx.getVentas().isEmpty()) {
-                    return 0;
+                try {
+                    if (!krdx.findVentas().isEmpty()) {
+                        return krdx.findVentas().size();
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                return krdx.getVentas().size();
+                return 0;
             }
 
             @Override
@@ -57,20 +63,23 @@ public class Ventas extends javax.swing.JPanel {
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-                Venta vtmp = krdx.getVentas().get(rowIndex);
-                if (columnIndex == 0) {
-                    return f.format(vtmp.getFecha());
-                } else if (columnIndex == 1) {
-                    return vtmp.getIdVenta();
-                } else if (columnIndex == 2) {
-                    return vtmp.getVendedor().toString();
-                } else if (columnIndex == 3) {
-                    if (vtmp.getCliente() == null) {
-                        return "Anonimo";
+                try {
+                    Venta vtmp = krdx.findVentas().get(rowIndex);
+                    if (columnIndex == 0) {
+                        return f.format(vtmp.getFecha());
+                    } else if (columnIndex == 1) {
+                        return vtmp.getIdVenta();
+                    } else if (columnIndex == 2) {
+                        return vtmp.getVendedor().toString();
+                    } else if (columnIndex == 3) {
+                        if (vtmp.getCliente() == null) {
+                            return "Anonimo";
+                        }
+                        return vtmp.getCliente().toString();
+                    } else if (columnIndex == 4) {
+                        return vtmp.getSubtotal();
                     }
-                    return vtmp.getCliente().toString();
-                } else if (columnIndex == 4) {
-                    return vtmp.getSubtotal();
+                } catch (Exception e) {
                 }
                 return "";
             }

@@ -1,10 +1,16 @@
 package Obj;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
 public abstract class Persona implements Serializable {
 
+    @Id
     private String identificacion;
+    @Column(length = 50, nullable = false)
     private String nombre;
 
     public Persona(String id, String nombre) throws Exception {
