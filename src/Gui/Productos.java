@@ -142,7 +142,7 @@ public class Productos extends javax.swing.JPanel {
                         .addComponent(txtfNuevoCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnNuevoProducto)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 141, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlProductoNuevoLayout.setVerticalGroup(
@@ -161,8 +161,8 @@ public class Productos extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(pnlProductoNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNuevoCosto)
-                    .addComponent(txtfNuevoCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevoProducto))
+                    .addComponent(btnNuevoProducto)
+                    .addComponent(txtfNuevoCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -222,7 +222,7 @@ public class Productos extends javax.swing.JPanel {
 
     private void EvtAddProducto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAddProducto
         try {
-            String codigo = txtfNuevoCodigo.getText();
+            String codigo = txtfNuevoCodigo.getText().toUpperCase();
             String nombre = txtfNuevoNombre.getText();
             String descripcion = txtfNuevoDescripcion.getText();
             String costo = txtfNuevoCosto.getText().trim();

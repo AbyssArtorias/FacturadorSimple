@@ -173,11 +173,10 @@ public class Clientes extends javax.swing.JPanel {
 
     private void EvtNuevoCliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtNuevoCliente
         try {
-            if (txtfNuevoIdentificacion.equals("".trim()) || txtfNuevoNombre.equals("".trim())) {
-                JOptionPane.showMessageDialog(pnlNuevoCliente, "Debe rellenar todas las casillas.", krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
-            }
             Cliente ctmp = new Cliente(txtfNuevoIdentificacion.getText(), txtfNuevoNombre.getText());
             this.krdx.add(ctmp);
+            txtfNuevoIdentificacion.setText("");
+            txtfNuevoNombre.setText("");
         } catch (Exception ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(pnlNuevoCliente, "Warning\n\n" + ex.getMessage(), krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);

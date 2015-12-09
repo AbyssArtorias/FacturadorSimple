@@ -12,7 +12,7 @@ public class Venta implements Serializable {
     private Date fecha;
     private String idVenta;
     private ArrayList<Item> items = new ArrayList<>();
-    private float subtotal = 0;
+    private double subtotal = 0;
 
     public Venta(String id, Vendedor persona, Cliente cliente) {
         this.idVenta = id;
@@ -34,7 +34,7 @@ public class Venta implements Serializable {
         this.items = items;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.subtotal = valor;
     }
 
@@ -58,7 +58,7 @@ public class Venta implements Serializable {
         return items;
     }
 
-    public float getSubtotal() {
+    public double getSubtotal() {
         return subtotal;
     }
 

@@ -14,7 +14,10 @@ public class Kardex implements Serializable {
     private ArrayList<Venta> ventas = new ArrayList<>();
     private int idVenta = 1;
 
-    public Kardex(String id) {
+    public Kardex(String id) throws Exception {
+        if (id.equals("".trim())) {
+            throw new Exception("No se permiten parametros vacios");
+        }
         this.nombre = id;
     }
 
@@ -103,13 +106,15 @@ public class Kardex implements Serializable {
         throw new Exception("Producto no encontrado");
     }
 
-    public ArrayList<Producto> findProductos(String nombre) throws Exception {
+    public ArrayList<Producto> findProductos(String nombre) {
         ArrayList<Producto> ptmp = new ArrayList<>();
         for (Producto producto : this.productos) {
-            ptmp.add(producto);
+            if (producto.getNombre().contains(nombre)) {
+                ptmp.add(producto);
+            }
         }
         if (ptmp.isEmpty()) {
-            throw new Exception("Ningun elemento coincide con la busqueda");
+            return null;
         }
         return ptmp;
     }

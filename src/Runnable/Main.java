@@ -26,9 +26,9 @@ public class Main {
             e.printStackTrace();
         }
         try {
-            String os = System.getProperty("os.name");
+            String os[] = System.getProperty("os.name").split(" ");
             String us = System.getProperty("user.home");
-            if ("Linux".equals(os)) {
+            if ("Linux".equals(os[0])) {
                 fl = new File(us + "/Documentos/Kardez.dat");
                 if (fl.exists()) {
                     System.out.println("Archivo existe");
@@ -39,7 +39,7 @@ public class Main {
                     new CrearInstancia().setVisible(true);
                     //System.out.println("Archivo creado con exito");
                 }
-            } else if ("Windows".equals(os)) {
+            } else if ("Windows".equals(os[0])) {
                 fl = new File("C:/Kardez.dat");
                 if (fl.exists()) {
                     System.out.println("Archivo existe");

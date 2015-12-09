@@ -7,9 +7,12 @@ public class Producto implements Serializable {
     private String codigo;
     private String nombre;
     private String descripcion;
-    private float costo;
+    private double costo;
 
-    public Producto(String codigo, String nombre, String descripcion, float costo) {
+    public Producto(String codigo, String nombre, String descripcion, float costo) throws Exception {
+        if (codigo.equals("".trim()) || nombre.equals("".trim()) || descripcion.equals("".trim()) || "".trim().equals(costo)) {
+            throw new Exception("No se permiten parametros vacios");
+        }
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -28,7 +31,7 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public void setCosto(float costo) {
+    public void setCosto(double costo) {
         this.costo = costo;
     }
 
@@ -44,7 +47,7 @@ public class Producto implements Serializable {
         return descripcion;
     }
 
-    public float getCosto() {
+    public double getCosto() {
         return costo;
     }
 

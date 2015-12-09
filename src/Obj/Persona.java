@@ -7,7 +7,10 @@ public abstract class Persona implements Serializable {
     private String identificacion;
     private String nombre;
 
-    public Persona(String id, String nombre) {
+    public Persona(String id, String nombre) throws Exception {
+        if (id.equals("".trim()) || nombre.equals("".trim())) {
+            throw new Exception("No se permiten parametros vacios");
+        }
         this.identificacion = id;
         this.nombre = nombre;
     }
