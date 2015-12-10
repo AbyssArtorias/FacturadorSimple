@@ -6,10 +6,13 @@
 package Gui.InitApp;
 
 import Gui.Login;
-import Obj.Empleado;
 import Obj.Kardex;
 import java.awt.Image;
-import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -21,34 +24,50 @@ import javax.swing.JOptionPane;
  */
 public class CrearInstancia extends javax.swing.JFrame {
 
-    private Kardex krdx = null;
-    private Empleado vnddr = null;
-    private String us = System.getProperty("user.home");
-    private String os[] = System.getProperty("os.name").split(" ");
-    private File fl;
+    private String pathName = null;
+    public boolean NonStatus = true;
+    public String NombreIstancia = null;
+    public String IdEmpleado = null;
+    public String NombreEmpleado = null;
 
     /**
-     * Creates new form CrearInstancia
+     *
+     * @param ruta
      */
-    public CrearInstancia() {
-        initComponents();
-        Image icon = new ImageIcon(getClass().getResource("/Media/001.png")).getImage();
-        this.setIconImage(icon);
-        init();
-        this.setLocationRelativeTo(null);
-    }
-
-    public void init() {
-        System.out.println(os[0]);
-        if ("Linux".equals(os[0])) {
-            fl = new File(us + "/Documentos/Kardez.dat");
-        } else {
-            fl = new File("C:\\Kardez.dat");
+    public CrearInstancia(String ruta) {
+        BufferedWriter bw = null;
+        try {
+            this.pathName = ruta;
+            initComponents();
+            bw = new BufferedWriter(new FileWriter(pathName));
+            Image icon = new ImageIcon(getClass().getResource("/Media/001.png")).getImage();
+            this.setIconImage(icon);
+            this.setLocationRelativeTo(null);
+        } catch (IOException ex) {
+            Logger.getLogger(CrearInstancia.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                bw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(CrearInstancia.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
-    public Kardex getKrdx() {
-        return krdx;
+    public String getNombreIstancia() {
+        return NombreIstancia;
+    }
+
+    public String getIdEmpleado() {
+        return IdEmpleado;
+    }
+
+    public String getNombreEmpleado() {
+        return NombreEmpleado;
+    }
+
+    public boolean isNonStatus() {
+        return NonStatus;
     }
 
     /**
@@ -81,6 +100,9 @@ public class CrearInstancia extends javax.swing.JFrame {
 
         lblEmpleadoNombre.setText("Nombre del Empleado:");
 
+        txtfEmpleadoId.setEnabled(false);
+
+        txtfEmpleadoNombre.setEnabled(false);
         txtfEmpleadoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EvtAceptar(evt);
@@ -169,24 +191,33 @@ public class CrearInstancia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EvtAceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAceptar
+        NombreIstancia = txtfNombreEmpresa.getText();
+        ObjectOutputStream oos = null;
+        String emprs = null;
         try {
-            krdx = new Kardex(txtfNombreEmpresa.getText().trim());
-            vnddr = new Empleado(txtfEmpleadoId.getText().trim(), txtfEmpleadoNombre.getText().trim());
-            krdx.add(vnddr);
-            new Login(krdx).setVisible(true);
-            this.setVisible(false);
+            oos = new ObjectOutputStream(new FileOutputStream(pathName));
+            emprs = new String(NombreIstancia);
+            oos.writeObject(emprs);
+        } catch (Exception e) {
+            Logger.getLogger(CrearInstancia.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                oos.close();
+            } catch (IOException ex) {
+                Logger.getLogger(CrearInstancia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        this.setVisible(false);
+        try {
+            new Login(new Kardex(emprs)).setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(CrearInstancia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_EvtAceptar
 
     private void EvtCancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtCancelar
-        if (fl.delete()) {
-            JOptionPane.showMessageDialog(rootPane, "Operacion cancelada", "Crear instancia", JOptionPane.ERROR_MESSAGE);
-        } else {
-            String ms = "Operacion cancelada. Recuerde eliminar el archivo C:\\Kardez.dat";
-            JOptionPane.showMessageDialog(rootPane, ms, "Crear instancia", JOptionPane.ERROR_MESSAGE);
-        }
+        String ms = "Operacion cancelada";
+        JOptionPane.showMessageDialog(rootPane, ms, "Crear instancia", JOptionPane.ERROR_MESSAGE);
         System.exit(0);
     }//GEN-LAST:event_EvtCancelar
 

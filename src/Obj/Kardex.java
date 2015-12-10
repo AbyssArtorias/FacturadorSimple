@@ -15,19 +15,28 @@ public class Kardex implements Serializable {
 
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("FSPU");
 
-    private EmpleadoJpaController empleadoJPA = new EmpleadoJpaController(emf);
-    private ClienteJpaController clienteJPA = new ClienteJpaController(emf);
-    private ProductoJpaController productoJPA = new ProductoJpaController(emf);
-    private VentaJpaController ventaJPA = new VentaJpaController(emf);
+    private EmpleadoJpaController empleadoJPA = null;
+    private ClienteJpaController clienteJPA = null;
+    private ProductoJpaController productoJPA = null;
+    private VentaJpaController ventaJPA = null;
 
     public Kardex(String id) throws Exception {
         if (id.equals("".trim())) {
             throw new Exception("No se permiten parametros vacios");
         }
         this.nombre = id;
+        init();
     }
 
     public Kardex() {
+        init();
+    }
+
+    public void init() {
+        empleadoJPA = new EmpleadoJpaController(emf);
+        clienteJPA = new ClienteJpaController(emf);
+        productoJPA = new ProductoJpaController(emf);
+        ventaJPA = new VentaJpaController(emf);
     }
 
     public void setNombre(String nombre) {
