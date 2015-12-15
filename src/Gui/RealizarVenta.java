@@ -9,7 +9,7 @@ import Obj.Cliente;
 import Obj.Item;
 import Obj.Kardex;
 import Obj.Producto;
-import Obj.Vendedor;
+import Obj.Empleado;
 import Obj.Venta;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import javax.swing.table.AbstractTableModel;
 public class RealizarVenta extends javax.swing.JPanel {
 
     private Kardex krdx = null;
-    private Vendedor venddr = null;
+    private Empleado venddr = null;
     private Cliente clnt = null;
     private Venta ventTemp = null;
     public App appRun = null;
@@ -37,7 +37,7 @@ public class RealizarVenta extends javax.swing.JPanel {
      * @param vendedor
      * @param app
      */
-    public RealizarVenta(Kardex kardex, Vendedor vendedor, App app) {
+    public RealizarVenta(Kardex kardex, Empleado vendedor, App app) {
         this.krdx = kardex;
         this.venddr = vendedor;
         this.appRun = app;

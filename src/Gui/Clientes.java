@@ -7,7 +7,7 @@ package Gui;
 
 import Obj.Cliente;
 import Obj.Kardex;
-import Obj.Vendedor;
+import Obj.Empleado;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,12 +20,12 @@ import javax.swing.table.AbstractTableModel;
 public class Clientes extends javax.swing.JPanel {
 
     private Kardex krdx = null;
-    private Vendedor venddr = null;
+    private Empleado venddr = null;
 
     /**
      * Creates new form Clientes
      */
-    public Clientes(Kardex kardex, Vendedor vendedor) {
+    public Clientes(Kardex kardex, Empleado vendedor) {
         this.krdx = kardex;
         this.venddr = vendedor;
         initComponents();

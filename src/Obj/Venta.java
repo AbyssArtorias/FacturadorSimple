@@ -7,14 +7,17 @@ import java.util.Date;
 
 public class Venta implements Serializable {
 
-    private Vendedor vendedor;
+    private Empleado vendedor;
     private Cliente cliente = null;
     private Date fecha;
     private String idVenta;
+    private boolean Activa = true;
     private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Abono> abonos = new ArrayList<>();
     private double subtotal = 0;
+    private double porPagar = 0;
 
-    public Venta(String id, Vendedor persona, Cliente cliente) {
+    public Venta(String id, Empleado persona, Cliente cliente) {
         this.idVenta = id;
         this.vendedor = persona;
         this.cliente = cliente;
@@ -38,12 +41,20 @@ public class Venta implements Serializable {
         this.subtotal = valor;
     }
 
-    public void setVendedor(Vendedor vendedor) {
+    public void setVendedor(Empleado vendedor) {
         this.vendedor = vendedor;
     }
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public void setAbonos(ArrayList<Abono> abonos) {
+        this.abonos = abonos;
+    }
+
+    public void setActiva(boolean Activa) {
+        this.Activa = Activa;
     }
 
     public Date getFecha() {
@@ -58,16 +69,28 @@ public class Venta implements Serializable {
         return items;
     }
 
-    public double getSubtotal() {
-        return subtotal;
+    public ArrayList<Abono> getAbonos() {
+        return abonos;
     }
 
-    public Vendedor getVendedor() {
+    public Empleado getVendedor() {
         return vendedor;
     }
 
     public Cliente getCliente() {
         return cliente;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public double getPorPagar() {
+        return porPagar;
+    }
+
+    public boolean isActiva() {
+        return Activa;
     }
 
     @Override
@@ -108,11 +131,19 @@ public class Venta implements Serializable {
 
     public void add(Item item) throws Exception {
         this.items.add(item);
-        this.subtotal += item.getSubtotal();
+        this.porPagar = this.subtotal += item.getSubtotal();
+    }
+
+    public void add(Abono abono) throws Exception {
+        this.abonos.add(abono);
+        this.porPagar -= abono.getTotalAbono();
+        if (this.porPagar == (double) 0) {
+            this.Activa = false;
+        }
     }
 
     public void remove(Item item) throws Exception {
         this.items.remove(item);
-        this.subtotal -= item.getSubtotal();
+        this.porPagar = this.subtotal -= item.getSubtotal();
     }
 }

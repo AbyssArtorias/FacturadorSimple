@@ -6,7 +6,7 @@
 package Gui;
 
 import Obj.Kardex;
-import Obj.Vendedor;
+import Obj.Empleado;
 import Obj.Venta;
 import java.text.SimpleDateFormat;
 import javax.swing.table.AbstractTableModel;
@@ -18,14 +18,14 @@ import javax.swing.table.AbstractTableModel;
 public class Ventas extends javax.swing.JPanel {
 
     private Kardex krdx = null;
-    private Vendedor venddr = null;
+    private Empleado venddr = null;
 
     /**
      *
      * @param kardex
      * @param vendedor
      */
-    public Ventas(Kardex kardex, Vendedor vendedor) {
+    public Ventas(Kardex kardex, Empleado vendedor) {
         this.krdx = kardex;
         this.venddr = vendedor;
         initComponents();

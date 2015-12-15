@@ -8,7 +8,7 @@ import java.util.Date;
 public class Kardex implements Serializable {
 
     private String nombre;
-    private ArrayList<Vendedor> vendedores = new ArrayList<>();
+    private ArrayList<Empleado> vendedores = new ArrayList<>();
     private ArrayList<Cliente> clientes = new ArrayList<>();
     private ArrayList<Producto> productos = new ArrayList<>();
     private ArrayList<Venta> ventas = new ArrayList<>();
@@ -32,7 +32,7 @@ public class Kardex implements Serializable {
         return nombre;
     }
 
-    public void setVendedores(ArrayList<Vendedor> vendedores) {
+    public void setVendedores(ArrayList<Empleado> vendedores) {
         this.vendedores = vendedores;
     }
 
@@ -52,7 +52,7 @@ public class Kardex implements Serializable {
         return ventas;
     }
 
-    public ArrayList<Vendedor> getVendedores() {
+    public ArrayList<Empleado> getVendedores() {
         return vendedores;
     }
 
@@ -69,7 +69,7 @@ public class Kardex implements Serializable {
         return "Kardex: " + nombre;
     }
 
-    public void add(Vendedor vendedor) throws Exception {
+    public void add(Empleado vendedor) throws Exception {
         if (this.vendedores.contains(vendedor)) {
             throw new Exception("Elemento ya incluido en el programa");
         }
@@ -168,7 +168,7 @@ public class Kardex implements Serializable {
         return vtmp;
     }
 
-    public ArrayList<Venta> findVenta(Date fecha, Cliente cliente, Vendedor vendedor) throws Exception {
+    public ArrayList<Venta> findVenta(Date fecha, Cliente cliente, Empleado vendedor) throws Exception {
         ArrayList<Venta> vtmp = new ArrayList<>();
         for (Venta venta : this.ventas) {
             if (venta.getFecha().equals(fecha) && venta.getCliente().equals(cliente)
@@ -182,8 +182,8 @@ public class Kardex implements Serializable {
         return vtmp;
     }
 
-    public Vendedor findVendedor(String id) throws Exception {
-        for (Vendedor vendedor : this.vendedores) {
+    public Empleado findVendedor(String id) throws Exception {
+        for (Empleado vendedor : this.vendedores) {
             if (vendedor.getIdentificacion().equals(id)) {
                 return vendedor;
             }

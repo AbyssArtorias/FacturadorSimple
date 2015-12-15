@@ -91,11 +91,22 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="lblEmpleadoNombre" min="-2" max="-2" attributes="0"/>
                       <Component id="lblEmpleadoId" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblEmpleadoTelefono" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblEmpleadoDireccion" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="txtfEmpleadoDireccion" max="32767" attributes="0"/>
+                      <Component id="txtfEmpleadoTelefono" max="32767" attributes="0"/>
                       <Component id="txtfEmpleadoId" max="32767" attributes="0"/>
-                      <Component id="txtfEmpleadoNombre" pref="250" max="32767" attributes="0"/>
+                      <Component id="txtfEmpleadoNombre" pref="276" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblInfo" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblInfo1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -109,10 +120,24 @@
                       <Component id="lblEmpleadoId" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtfEmpleadoId" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblInfo" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblInfo1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblEmpleadoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtfEmpleadoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txtfEmpleadoTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblEmpleadoTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="txtfEmpleadoDireccion" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblEmpleadoDireccion" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -125,9 +150,24 @@
             <Property name="text" type="java.lang.String" value="Identificacion del Empleado:"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JLabel" name="lblInfo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Este campo sera usado como id (User:) para el"/>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JLabel" name="lblEmpleadoNombre">
           <Properties>
             <Property name="text" type="java.lang.String" value="Nombre del Empleado:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblEmpleadoTelefono">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Telefono del Empleado:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblEmpleadoDireccion">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Direccion del Empleado:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtfEmpleadoId">
@@ -136,6 +176,15 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EvtAceptar"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtfEmpleadoTelefono">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtfEmpleadoDireccion">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInfo1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="inicio de sesion de la aplicacion."/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

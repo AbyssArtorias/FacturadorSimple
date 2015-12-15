@@ -5,8 +5,8 @@
  */
 package Gui;
 
+import Obj.Empleado;
 import Obj.Kardex;
-import Obj.Vendedor;
 import java.awt.Image;
 import java.io.File;
 import java.util.logging.Level;
@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 public class CrearInstancia extends javax.swing.JFrame {
 
     private Kardex krdx = null;
-    private Vendedor vnddr = null;
+    private Empleado vnddr = null;
     private String us = System.getProperty("user.home");
     private String os[] = System.getProperty("os.name").split(" ");
     private File fl;
@@ -59,9 +59,15 @@ public class CrearInstancia extends javax.swing.JFrame {
         txtfNombreEmpresa = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         lblEmpleadoId = new javax.swing.JLabel();
+        lblInfo = new javax.swing.JLabel();
         lblEmpleadoNombre = new javax.swing.JLabel();
+        lblEmpleadoTelefono = new javax.swing.JLabel();
+        lblEmpleadoDireccion = new javax.swing.JLabel();
         txtfEmpleadoId = new javax.swing.JTextField();
         txtfEmpleadoNombre = new javax.swing.JTextField();
+        txtfEmpleadoTelefono = new javax.swing.JTextField();
+        txtfEmpleadoDireccion = new javax.swing.JTextField();
+        lblInfo1 = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -74,13 +80,21 @@ public class CrearInstancia extends javax.swing.JFrame {
 
         lblEmpleadoId.setText("Identificacion del Empleado:");
 
+        lblInfo.setText("Este campo sera usado como id (User:) para el");
+
         lblEmpleadoNombre.setText("Nombre del Empleado:");
+
+        lblEmpleadoTelefono.setText("Telefono del Empleado:");
+
+        lblEmpleadoDireccion.setText("Direccion del Empleado:");
 
         txtfEmpleadoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EvtAceptar(evt);
             }
         });
+
+        lblInfo1.setText("inicio de sesion de la aplicacion.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -90,11 +104,20 @@ public class CrearInstancia extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblEmpleadoNombre)
-                    .addComponent(lblEmpleadoId))
+                    .addComponent(lblEmpleadoId)
+                    .addComponent(lblEmpleadoTelefono)
+                    .addComponent(lblEmpleadoDireccion))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtfEmpleadoDireccion)
+                    .addComponent(txtfEmpleadoTelefono)
                     .addComponent(txtfEmpleadoId)
-                    .addComponent(txtfEmpleadoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                    .addComponent(txtfEmpleadoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblInfo)
+                            .addComponent(lblInfo1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -104,10 +127,22 @@ public class CrearInstancia extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmpleadoId)
                     .addComponent(txtfEmpleadoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblInfo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblInfo1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmpleadoNombre)
                     .addComponent(txtfEmpleadoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtfEmpleadoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEmpleadoTelefono))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtfEmpleadoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEmpleadoDireccion))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -166,7 +201,11 @@ public class CrearInstancia extends javax.swing.JFrame {
     private void EvtAceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAceptar
         try {
             krdx = new Kardex(txtfNombreEmpresa.getText().trim());
-            vnddr = new Vendedor(txtfEmpleadoId.getText().trim(), txtfEmpleadoNombre.getText().trim());
+            String id = txtfEmpleadoId.getText();
+            String name = txtfEmpleadoNombre.getText();
+            String telephone = txtfEmpleadoTelefono.getText();
+            String adress = txtfEmpleadoDireccion.getText();
+            vnddr = new Empleado(id, name, telephone, adress);
             krdx.add(vnddr);
             new Login(krdx).setVisible(true);
             this.setVisible(false);
@@ -189,11 +228,17 @@ public class CrearInstancia extends javax.swing.JFrame {
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblEmpleadoDireccion;
     private javax.swing.JLabel lblEmpleadoId;
     private javax.swing.JLabel lblEmpleadoNombre;
+    private javax.swing.JLabel lblEmpleadoTelefono;
+    private javax.swing.JLabel lblInfo;
+    private javax.swing.JLabel lblInfo1;
     private javax.swing.JLabel lblNombreEmpresa;
+    private javax.swing.JTextField txtfEmpleadoDireccion;
     private javax.swing.JTextField txtfEmpleadoId;
     private javax.swing.JTextField txtfEmpleadoNombre;
+    private javax.swing.JTextField txtfEmpleadoTelefono;
     private javax.swing.JTextField txtfNombreEmpresa;
     // End of variables declaration//GEN-END:variables
 }

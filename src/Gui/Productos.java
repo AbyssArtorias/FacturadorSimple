@@ -7,7 +7,7 @@ package Gui;
 
 import Obj.Kardex;
 import Obj.Producto;
-import Obj.Vendedor;
+import Obj.Empleado;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,7 +20,7 @@ import javax.swing.table.AbstractTableModel;
 public class Productos extends javax.swing.JPanel {
 
     private Kardex krdx = null;
-    private Vendedor venddr = null;
+    private Empleado venddr = null;
     private App appRun = null;
 
     /**
@@ -28,7 +28,7 @@ public class Productos extends javax.swing.JPanel {
      * @param kardex
      * @param vendedor
      */
-    public Productos(Kardex kardex, Vendedor vendedor, App app) {
+    public Productos(Kardex kardex, Empleado vendedor, App app) {
         this.krdx = kardex;
         this.venddr = vendedor;
         this.appRun = app;

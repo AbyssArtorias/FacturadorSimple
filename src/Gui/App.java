@@ -6,7 +6,7 @@
 package Gui;
 
 import Obj.Kardex;
-import Obj.Vendedor;
+import Obj.Empleado;
 import java.awt.Image;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -21,7 +21,7 @@ import javax.swing.ImageIcon;
 public class App extends javax.swing.JFrame {
 
     private Kardex krdx = null;
-    private Vendedor venddr = null;
+    private Empleado venddr = null;
     public RealizarVenta rVenta = null;
     private Productos prodcts = null;
     private Clientes clints = null;
@@ -32,7 +32,7 @@ public class App extends javax.swing.JFrame {
      * @param kardex
      * @param vendedor
      */
-    public App(Kardex kardex, Vendedor vendedor) {
+    public App(Kardex kardex, Empleado vendedor) {
         this.krdx = kardex;
         this.venddr = vendedor;
         this.rVenta = new RealizarVenta(this.krdx, this.venddr, this);
