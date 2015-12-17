@@ -1,30 +1,40 @@
 package Obj;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public abstract class Persona implements Serializable {
 
-    private String identificacion;
+    private String identificacion = "";
     private String nombre;
     private String telefono;
     private String direccion;
 
-    public Persona(String id, String nombre, String tel, String dir) {
+    public Persona(String id, String nombre, String tel, String dir) throws Exception {
+        if (nombre.equals("".trim())) {
+            throw new Exception("Valores no permitidos.");
+        }
         this.identificacion = id;
         this.nombre = nombre;
         this.telefono = tel;
         this.direccion = dir;
     }
 
-    public Persona(String id, String nom, String tel) {
+    public Persona(String id, String nom, String tel) throws Exception {
+        if (nombre.equals("".trim())) {
+            throw new Exception("Valores no permitidos.");
+        }
         this.identificacion = id;
         this.nombre = nom;
         this.telefono = tel;
     }
 
-    public Persona(String nom, String tel) {
+    public Persona(String id, String nom) throws Exception {
+        if (nombre.equals("".trim())) {
+            throw new Exception("Valores no permitidos.");
+        }
+        this.identificacion = id;
         this.nombre = nom;
-        this.telefono = tel;
     }
 
     public Persona() {
@@ -64,29 +74,20 @@ public abstract class Persona implements Serializable {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((identificacion == null) ? 0 : identificacion.hashCode());
-        return result;
+        int hash = 3;
+        return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Persona other = (Persona) obj;
-        if (identificacion == null) {
-            if (other.identificacion != null) {
-                return false;
-            }
-        } else if (!identificacion.equals(other.identificacion)) {
+        final Persona other = (Persona) obj;
+        if (!Objects.equals(this.identificacion, other.identificacion)) {
             return false;
         }
         return true;

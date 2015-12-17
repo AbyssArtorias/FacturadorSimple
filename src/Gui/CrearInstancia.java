@@ -25,6 +25,7 @@ public class CrearInstancia extends javax.swing.JFrame {
     private String us = System.getProperty("user.home");
     private String os[] = System.getProperty("os.name").split(" ");
     private File fl;
+    private boolean statuspass = false;
 
     /**
      * Creates new form CrearInstancia
@@ -60,14 +61,19 @@ public class CrearInstancia extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lblEmpleadoId = new javax.swing.JLabel();
         lblInfo = new javax.swing.JLabel();
+        lblInfo1 = new javax.swing.JLabel();
+        lblEmpleadoPassword = new javax.swing.JLabel();
+        lblConfirmarPassword = new javax.swing.JLabel();
+        lblPasswordStatus = new javax.swing.JLabel();
         lblEmpleadoNombre = new javax.swing.JLabel();
         lblEmpleadoTelefono = new javax.swing.JLabel();
         lblEmpleadoDireccion = new javax.swing.JLabel();
         txtfEmpleadoId = new javax.swing.JTextField();
+        psfEmpleadoPassword = new javax.swing.JPasswordField();
         txtfEmpleadoNombre = new javax.swing.JTextField();
         txtfEmpleadoTelefono = new javax.swing.JTextField();
         txtfEmpleadoDireccion = new javax.swing.JTextField();
-        lblInfo1 = new javax.swing.JLabel();
+        psfConfirm = new javax.swing.JPasswordField();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -82,6 +88,14 @@ public class CrearInstancia extends javax.swing.JFrame {
 
         lblInfo.setText("Este campo sera usado como id (User:) para el");
 
+        lblInfo1.setText("inicio de sesion de la aplicacion.");
+
+        lblEmpleadoPassword.setText("Password del Empleado:");
+
+        lblConfirmarPassword.setText("Confirme password:");
+
+        lblPasswordStatus.setText("...");
+
         lblEmpleadoNombre.setText("Nombre del Empleado:");
 
         lblEmpleadoTelefono.setText("Telefono del Empleado:");
@@ -94,7 +108,11 @@ public class CrearInstancia extends javax.swing.JFrame {
             }
         });
 
-        lblInfo1.setText("inicio de sesion de la aplicacion.");
+        psfConfirm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                EvtConfrimPassword(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,6 +121,8 @@ public class CrearInstancia extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblConfirmarPassword)
+                    .addComponent(lblEmpleadoPassword)
                     .addComponent(lblEmpleadoNombre)
                     .addComponent(lblEmpleadoId)
                     .addComponent(lblEmpleadoTelefono)
@@ -113,11 +133,14 @@ public class CrearInstancia extends javax.swing.JFrame {
                     .addComponent(txtfEmpleadoTelefono)
                     .addComponent(txtfEmpleadoId)
                     .addComponent(txtfEmpleadoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                    .addComponent(psfEmpleadoPassword)
+                    .addComponent(psfConfirm)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblInfo)
                             .addComponent(lblInfo1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblPasswordStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -131,6 +154,16 @@ public class CrearInstancia extends javax.swing.JFrame {
                 .addComponent(lblInfo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblInfo1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(psfEmpleadoPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEmpleadoPassword))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblConfirmarPassword)
+                    .addComponent(psfConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(lblPasswordStatus)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmpleadoNombre)
@@ -190,8 +223,8 @@ public class CrearInstancia extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnAceptar))
+                    .addComponent(btnAceptar)
+                    .addComponent(btnCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -202,10 +235,15 @@ public class CrearInstancia extends javax.swing.JFrame {
         try {
             krdx = new Kardex(txtfNombreEmpresa.getText().trim());
             String id = txtfEmpleadoId.getText();
+            String ps = new String(psfEmpleadoPassword.getPassword());
             String name = txtfEmpleadoNombre.getText();
             String telephone = txtfEmpleadoTelefono.getText();
             String adress = txtfEmpleadoDireccion.getText();
-            vnddr = new Empleado(id, name, telephone, adress);
+            if (statuspass) {
+                vnddr = new Empleado(id, name, telephone, adress, ps);
+            } else {
+                lblPasswordStatus.setText("las contraseñas no coinciden, no se puede continuar");
+            }
             krdx.add(vnddr);
             new Login(krdx).setVisible(true);
             this.setVisible(false);
@@ -224,17 +262,37 @@ public class CrearInstancia extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_EvtCancelar
 
+    private void EvtConfrimPassword(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_EvtConfrimPassword
+        String ps = new String(psfEmpleadoPassword.getPassword());
+        String ck = new String(psfConfirm.getPassword());
+        if (!ps.equals("".trim())) {
+            if (ps.equals(ck)) {
+                statuspass = true;
+                lblPasswordStatus.setText("las contraseñas coinciden");
+            } else {
+                lblPasswordStatus.setText("las contraseñas no coinciden");
+            }
+        } else {
+            lblPasswordStatus.setText("No se permite un valor vacio para la contraseña");
+        }
+    }//GEN-LAST:event_EvtConfrimPassword
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblConfirmarPassword;
     private javax.swing.JLabel lblEmpleadoDireccion;
     private javax.swing.JLabel lblEmpleadoId;
     private javax.swing.JLabel lblEmpleadoNombre;
+    private javax.swing.JLabel lblEmpleadoPassword;
     private javax.swing.JLabel lblEmpleadoTelefono;
     private javax.swing.JLabel lblInfo;
     private javax.swing.JLabel lblInfo1;
     private javax.swing.JLabel lblNombreEmpresa;
+    private javax.swing.JLabel lblPasswordStatus;
+    private javax.swing.JPasswordField psfConfirm;
+    private javax.swing.JPasswordField psfEmpleadoPassword;
     private javax.swing.JTextField txtfEmpleadoDireccion;
     private javax.swing.JTextField txtfEmpleadoId;
     private javax.swing.JTextField txtfEmpleadoNombre;

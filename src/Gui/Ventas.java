@@ -5,10 +5,13 @@
  */
 package Gui;
 
-import Obj.Kardex;
 import Obj.Empleado;
+import Obj.Kardex;
 import Obj.Venta;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -17,24 +20,26 @@ import javax.swing.table.AbstractTableModel;
  */
 public class Ventas extends javax.swing.JPanel {
 
-    private Kardex krdx = null;
-    private Empleado venddr = null;
+    private Kardex krdx;
+    private App appRun;
+    private Empleado empld;
 
     /**
      *
      * @param kardex
-     * @param vendedor
+     * @param empleado
      */
-    public Ventas(Kardex kardex, Empleado vendedor) {
+    public Ventas(Kardex kardex, Empleado empleado, App app) {
         this.krdx = kardex;
-        this.venddr = vendedor;
+        this.empld = empleado;
+        this.appRun = app;
         initComponents();
         init();
     }
 
     public void init() {
         tblTodasLasVentas.setModel(new AbstractTableModel() {
-            String[] nmColumnas = {"Fecha", "idVenta", "Vendedor", "Cliente", "Total"};
+            String[] nmColumnas = {"Fecha", "idVenta", "Cliente", "Total", "Saldo a pagar"};
 
             @Override
             public String getColumnName(int column) {
@@ -63,14 +68,14 @@ public class Ventas extends javax.swing.JPanel {
                 } else if (columnIndex == 1) {
                     return vtmp.getIdVenta();
                 } else if (columnIndex == 2) {
-                    return vtmp.getVendedor().toString();
-                } else if (columnIndex == 3) {
                     if (vtmp.getCliente() == null) {
                         return "Anonimo";
                     }
                     return vtmp.getCliente().toString();
-                } else if (columnIndex == 4) {
+                } else if (columnIndex == 3) {
                     return vtmp.getSubtotal();
+                } else if (columnIndex == 4) {
+                    return vtmp.getSaldoPorPagar();
                 }
                 return "";
             }
@@ -87,12 +92,20 @@ public class Ventas extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlTodasLasVentas = new javax.swing.JPanel();
+        btnAbono = new javax.swing.JButton();
         scpTodasLasVentas = new javax.swing.JScrollPane();
         tblTodasLasVentas = new javax.swing.JTable();
 
         setPreferredSize(new java.awt.Dimension(472, 600));
 
         pnlTodasLasVentas.setBorder(javax.swing.BorderFactory.createTitledBorder("Todas las ventas"));
+
+        btnAbono.setText("Nuevo abono");
+        btnAbono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtNuevoAbono(evt);
+            }
+        });
 
         tblTodasLasVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -113,14 +126,20 @@ public class Ventas extends javax.swing.JPanel {
             pnlTodasLasVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTodasLasVentasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scpTodasLasVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                .addGroup(pnlTodasLasVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scpTodasLasVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTodasLasVentasLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAbono)))
                 .addContainerGap())
         );
         pnlTodasLasVentasLayout.setVerticalGroup(
             pnlTodasLasVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTodasLasVentasLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTodasLasVentasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scpTodasLasVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+                .addComponent(btnAbono)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scpTodasLasVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -142,8 +161,21 @@ public class Ventas extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void EvtNuevoAbono(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtNuevoAbono
+        try {
+            Venta vtmp = krdx.getVentas().get(tblTodasLasVentas.getSelectedRow());
+            if (vtmp.isActiva()) {
+                new RealizarAbono(appRun, vtmp, empld).setVisible(true);
+            }
+        } catch (Exception e) {
+            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, e.getMessage(), this.krdx.getNombre() + "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_EvtNuevoAbono
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAbono;
     private javax.swing.JPanel pnlTodasLasVentas;
     private javax.swing.JScrollPane scpTodasLasVentas;
     public javax.swing.JTable tblTodasLasVentas;

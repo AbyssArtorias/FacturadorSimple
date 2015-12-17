@@ -5,19 +5,22 @@
  */
 package Obj;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Dildo__Queen
  */
-public class Abono {
+public class Abono implements Serializable {
 
     private Date fecha;
+    private Empleado empld;
     private double totalAbono;
 
-    public Abono(Date fecha, double totalAbono) {
+    public Abono(Date fecha, Empleado empleado, double totalAbono) {
         this.fecha = fecha;
+        this.empld = empleado;
         this.totalAbono = totalAbono;
     }
 
@@ -32,8 +35,16 @@ public class Abono {
         this.totalAbono = totalAbono;
     }
 
+    public void setEmpld(Empleado empld) {
+        this.empld = empld;
+    }
+
     public Date getFecha() {
         return fecha;
+    }
+
+    public Empleado getEmpld() {
+        return empld;
     }
 
     public double getTotalAbono() {

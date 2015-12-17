@@ -6,8 +6,8 @@
 package Gui;
 
 import Obj.Cliente;
-import Obj.Kardex;
 import Obj.Empleado;
+import Obj.Kardex;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,7 +23,9 @@ public class Clientes extends javax.swing.JPanel {
     private Empleado venddr = null;
 
     /**
-     * Creates new form Clientes
+     *
+     * @param kardex
+     * @param vendedor
      */
     public Clientes(Kardex kardex, Empleado vendedor) {
         this.krdx = kardex;
@@ -34,7 +36,7 @@ public class Clientes extends javax.swing.JPanel {
 
     public void init() {
         tblClientes.setModel(new AbstractTableModel() {
-            String[] nmColumnas = {"Identificacion", "Cliente"};
+            String[] nmColumnas = {"Identificacion", "Cliente", "Telefono", "Direccion"};
 
             @Override
             public String getColumnName(int column) {
@@ -61,6 +63,10 @@ public class Clientes extends javax.swing.JPanel {
                     return ctmp.getIdentificacion();
                 } else if (columnIndex == 1) {
                     return ctmp.getNombre();
+                } else if (columnIndex == 2) {
+                    return ctmp.getTelefono();
+                } else if (columnIndex == 3) {
+                    return ctmp.getDireccion();
                 }
                 return "";
             }
@@ -77,10 +83,14 @@ public class Clientes extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlNuevoCliente = new javax.swing.JPanel();
-        lblNuevoIdentificacion = new javax.swing.JLabel();
-        lblNuevoNombre = new javax.swing.JLabel();
-        txtfNuevoIdentificacion = new javax.swing.JTextField();
-        txtfNuevoNombre = new javax.swing.JTextField();
+        lblIdentificacion = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblTelefono = new javax.swing.JLabel();
+        lblDireccion = new javax.swing.JLabel();
+        txtfId = new javax.swing.JTextField();
+        txtfNombre = new javax.swing.JTextField();
+        txtfTelefono = new javax.swing.JTextField();
+        txtfDireccion = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         scpClientes = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
@@ -89,11 +99,15 @@ public class Clientes extends javax.swing.JPanel {
 
         pnlNuevoCliente.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevo cliente"));
 
-        lblNuevoIdentificacion.setText("Identificacion:");
+        lblIdentificacion.setText("Identificacion:");
 
-        lblNuevoNombre.setText("Nombre:");
+        lblNombre.setText("Nombre:");
 
-        txtfNuevoNombre.addActionListener(new java.awt.event.ActionListener() {
+        lblTelefono.setText("Telefono.");
+
+        lblDireccion.setText("Direccion:");
+
+        txtfNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EvtNuevoCliente(evt);
             }
@@ -113,17 +127,21 @@ public class Clientes extends javax.swing.JPanel {
             .addGroup(pnlNuevoClienteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlNuevoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlNuevoClienteLayout.createSequentialGroup()
-                        .addGroup(pnlNuevoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNuevoIdentificacion)
-                            .addComponent(lblNuevoNombre))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlNuevoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtfNuevoIdentificacion)
-                            .addComponent(txtfNuevoNombre)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNuevoClienteLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnGuardar)))
+                        .addComponent(btnGuardar))
+                    .addGroup(pnlNuevoClienteLayout.createSequentialGroup()
+                        .addGroup(pnlNuevoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblTelefono)
+                            .addComponent(lblIdentificacion)
+                            .addComponent(lblNombre)
+                            .addComponent(lblDireccion))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlNuevoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtfId)
+                            .addComponent(txtfNombre)
+                            .addComponent(txtfTelefono)
+                            .addComponent(txtfDireccion))))
                 .addContainerGap())
         );
         pnlNuevoClienteLayout.setVerticalGroup(
@@ -131,15 +149,23 @@ public class Clientes extends javax.swing.JPanel {
             .addGroup(pnlNuevoClienteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlNuevoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNuevoIdentificacion)
-                    .addComponent(txtfNuevoIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblIdentificacion)
+                    .addComponent(txtfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlNuevoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNuevoNombre)
-                    .addComponent(txtfNuevoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombre)
+                    .addComponent(txtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(pnlNuevoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTelefono)
+                    .addComponent(txtfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlNuevoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDireccion)
+                    .addComponent(txtfDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -172,17 +198,19 @@ public class Clientes extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(pnlNuevoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(scpClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                .addComponent(scpClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void EvtNuevoCliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtNuevoCliente
         try {
-            Cliente ctmp = new Cliente(txtfNuevoIdentificacion.getText(), txtfNuevoNombre.getText());
+            Cliente ctmp = new Cliente(txtfId.getText(), txtfNombre.getText(), txtfTelefono.getText(), txtfDireccion.getText());
             this.krdx.add(ctmp);
-            txtfNuevoIdentificacion.setText("");
-            txtfNuevoNombre.setText("");
+            txtfId.setText("");
+            txtfNombre.setText("");
+            txtfTelefono.setText("");
+            txtfDireccion.setText("");
         } catch (Exception ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(pnlNuevoCliente, "Warning\n\n" + ex.getMessage(), krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
@@ -193,12 +221,16 @@ public class Clientes extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JLabel lblNuevoIdentificacion;
-    private javax.swing.JLabel lblNuevoNombre;
+    private javax.swing.JLabel lblDireccion;
+    private javax.swing.JLabel lblIdentificacion;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblTelefono;
     private javax.swing.JPanel pnlNuevoCliente;
     private javax.swing.JScrollPane scpClientes;
     private javax.swing.JTable tblClientes;
-    private javax.swing.JTextField txtfNuevoIdentificacion;
-    private javax.swing.JTextField txtfNuevoNombre;
+    private javax.swing.JTextField txtfDireccion;
+    private javax.swing.JTextField txtfId;
+    private javax.swing.JTextField txtfNombre;
+    private javax.swing.JTextField txtfTelefono;
     // End of variables declaration//GEN-END:variables
 }

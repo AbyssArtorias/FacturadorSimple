@@ -5,8 +5,8 @@
  */
 package Gui;
 
-import Obj.Kardex;
 import Obj.Empleado;
+import Obj.Kardex;
 import java.awt.Image;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -38,7 +38,7 @@ public class App extends javax.swing.JFrame {
         this.rVenta = new RealizarVenta(this.krdx, this.venddr, this);
         this.prodcts = new Productos(this.krdx, this.venddr, this);
         this.clints = new Clientes(this.krdx, this.venddr);
-        this.vents = new Ventas(this.krdx, this.venddr);
+        this.vents = new Ventas(this.krdx, this.venddr, this);
         initComponents();
         Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
         this.setIconImage(icon);
@@ -70,7 +70,7 @@ public class App extends javax.swing.JFrame {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                
+
             }
 
             @Override
@@ -80,17 +80,17 @@ public class App extends javax.swing.JFrame {
 
             @Override
             public void windowDeiconified(WindowEvent e) {
-                
+
             }
 
             @Override
             public void windowActivated(WindowEvent e) {
-                
+
             }
 
             @Override
             public void windowDeactivated(WindowEvent e) {
-                
+
             }
         });
     }
@@ -108,6 +108,9 @@ public class App extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(krdx.getNombre());
+        setMinimumSize(new java.awt.Dimension(600, 700));
+        setPreferredSize(new java.awt.Dimension(600, 700));
+        setSize(new java.awt.Dimension(0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

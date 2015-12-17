@@ -1,20 +1,17 @@
 package Runnable;
 
-import javax.swing.UIManager;
-
 import Gui.CrearInstancia;
 import Gui.Login;
 import Obj.Kardex;
 import java.io.BufferedWriter;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 public class Main {
 

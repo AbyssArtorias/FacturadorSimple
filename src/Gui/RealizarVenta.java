@@ -6,13 +6,12 @@
 package Gui;
 
 import Obj.Cliente;
+import Obj.Empleado;
 import Obj.Item;
 import Obj.Kardex;
 import Obj.Producto;
-import Obj.Empleado;
 import Obj.Venta;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -41,7 +40,7 @@ public class RealizarVenta extends javax.swing.JPanel {
         this.krdx = kardex;
         this.venddr = vendedor;
         this.appRun = app;
-        this.ventTemp = new Venta(this.krdx.getIdVenta() + "");
+        this.ventTemp = new Venta(this.krdx.getIdVenta() + "", this.venddr);
         initComponents();
         init();
     }
@@ -55,7 +54,7 @@ public class RealizarVenta extends javax.swing.JPanel {
             cmbProducto.addItem(ptmp);
         }
         tblVentas.setModel(new AbstractTableModel() {
-            String[] nmColumnas = {"Codigo", "Nombre", "Cantidad", "Subtotal"};
+            String[] nmColumnas = {"Codigo", "Nombre", "Cantidad", "Valor unitario", "Subtotal"};
 
             @Override
             public String getColumnName(int column) {
@@ -79,12 +78,14 @@ public class RealizarVenta extends javax.swing.JPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 Item itmp = ventTemp.getItems().get(rowIndex);
                 if (columnIndex == 0) {
-                    return itmp.getProducto().getCosto();
+                    return itmp.getProducto().getCodigo();
                 } else if (columnIndex == 1) {
                     return itmp.getProducto().getNombre();
                 } else if (columnIndex == 2) {
                     return itmp.getCantidad();
                 } else if (columnIndex == 3) {
+                    return itmp.getProducto().getCosto();
+                } else if (columnIndex == 4) {
                     return itmp.getSubtotal();
                 }
                 return "";
@@ -94,7 +95,7 @@ public class RealizarVenta extends javax.swing.JPanel {
     }
 
     public void newVenta() {
-        ventTemp = new Venta(this.krdx.getIdVenta() + "");
+        ventTemp = new Venta(this.krdx.getIdVenta() + "", this.venddr);
         tblVentas.updateUI();
         clnt = null;
         txtfClienteId.setText("");
@@ -118,6 +119,7 @@ public class RealizarVenta extends javax.swing.JPanel {
         lblCantidad = new javax.swing.JLabel();
         lblProducto = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
+        lblSaldo = new javax.swing.JLabel();
         txtfIdVenta = new javax.swing.JTextField();
         pnlCliente = new javax.swing.JPanel();
         lblClienteNombre = new javax.swing.JLabel();
@@ -135,11 +137,13 @@ public class RealizarVenta extends javax.swing.JPanel {
         scpVentas = new javax.swing.JScrollPane();
         tblVentas = new javax.swing.JTable();
         btnRemover = new javax.swing.JButton();
+        btnAbono = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtfTotal = new javax.swing.JFormattedTextField();
+        txtfSaldo = new javax.swing.JFormattedTextField();
 
-        setPreferredSize(new java.awt.Dimension(472, 600));
+        setPreferredSize(new java.awt.Dimension(472, 603));
 
         lblIdVenta.setText("idVenta:");
 
@@ -153,13 +157,15 @@ public class RealizarVenta extends javax.swing.JPanel {
 
         lblTotal.setText("Total:");
 
-        txtfIdVenta.setEnabled(false);
+        lblSaldo.setText("Saldo:");
+
+        txtfIdVenta.setFocusable(false);
 
         pnlCliente.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
 
         lblClienteNombre.setText("Nombre:");
 
-        txtfClienteNombre.setEnabled(false);
+        txtfClienteNombre.setFocusable(false);
 
         lblClienteId.setText("Identificacion:");
 
@@ -221,9 +227,9 @@ public class RealizarVenta extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        txtfVendedorId.setEnabled(false);
+        txtfVendedorId.setFocusable(false);
 
-        txtfVendedorNombre.setEnabled(false);
+        txtfVendedorNombre.setFocusable(false);
 
         txtfBuscarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,6 +273,13 @@ public class RealizarVenta extends javax.swing.JPanel {
             }
         });
 
+        btnAbono.setText("Nuevo abono");
+        btnAbono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtNuevoAbono(evt);
+            }
+        });
+
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,7 +294,11 @@ public class RealizarVenta extends javax.swing.JPanel {
             }
         });
 
-        txtfTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤########################,##0.--"))));
+        txtfTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤########################,##0.##"))));
+        txtfTotal.setFocusable(false);
+
+        txtfSaldo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(""))));
+        txtfSaldo.setFocusable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -331,8 +348,14 @@ public class RealizarVenta extends javax.swing.JPanel {
                                 .addComponent(btnCancelar))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(lblTotal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnAbono))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblSaldo)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtfSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -361,13 +384,18 @@ public class RealizarVenta extends javax.swing.JPanel {
                     .addComponent(jButton1)
                     .addComponent(txtfBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(scpVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                .addComponent(scpVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnRemover)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTotal)
-                    .addComponent(txtfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAbono))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtfSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSaldo))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
@@ -380,7 +408,9 @@ public class RealizarVenta extends javax.swing.JPanel {
         txtfClienteNombre.setText("Anonimo");
         txtfClienteId.setEnabled(false);
         txtfClienteNombre.setEnabled(false);
+        btnBuscar.setEnabled(false);
         clnt = null;
+        this.ventTemp.setCliente(clnt);
     }//GEN-LAST:event_EvtAnonimo
 
     private void EvtBuscarCliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtBuscarCliente
@@ -388,12 +418,10 @@ public class RealizarVenta extends javax.swing.JPanel {
             try {
                 clnt = (Cliente) this.krdx.findCliente(txtfClienteId.getText());
                 txtfClienteNombre.setText(clnt.getNombre());
-
+                this.ventTemp.setCliente(clnt);
             } catch (Exception ex) {
-                Logger.getLogger(RealizarVenta.class
-                        .getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(
-                        pnlCliente, "Warning\n\n" + ex.getMessage(), this.krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
+                Logger.getLogger(RealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(pnlCliente, "Warning\n\n" + ex.getMessage(), this.krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_EvtBuscarCliente
@@ -407,7 +435,8 @@ public class RealizarVenta extends javax.swing.JPanel {
         } catch (Exception ex) {
             Logger.getLogger(RealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        txtfTotal.setText(ventTemp.getSubtotal() + "");
+        txtfTotal.setValue(ventTemp.getSubtotal());
+        txtfSaldo.setValue(ventTemp.getSaldoPorPagar());
         tblVentas.updateUI();
     }//GEN-LAST:event_EvtAddToCar
 
@@ -420,19 +449,21 @@ public class RealizarVenta extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(pnlCliente, "La operacion no se puede realizar\n\n" + ex.getMessage(), krdx.getNombre() + "Warning", JOptionPane.WARNING_MESSAGE);
         }
         tblVentas.updateUI();
-        txtfTotal.setText(ventTemp.getSubtotal() + "");
+        txtfTotal.setValue(ventTemp.getSubtotal());
+        txtfSaldo.setValue(ventTemp.getSaldoPorPagar());
     }//GEN-LAST:event_EvtRemoveToCar
 
     private void EvtAddVenta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAddVenta
         try {
             if (!ventTemp.getItems().isEmpty()) {
-                ventTemp.setCliente(clnt);
-                ventTemp.setVendedor(venddr);
                 this.krdx.add(ventTemp);
                 this.appRun.vents.tblTodasLasVentas.updateUI();
                 this.krdx.siguienteIdVenta();
                 txtfIdVenta.setText(this.krdx.getIdVenta() + "");
                 newVenta();
+                txtfClienteId.setEnabled(true);
+                txtfClienteNombre.setEnabled(true);
+                btnBuscar.setEnabled(true);
             }
         } catch (Exception ex) {
             Logger.getLogger(RealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
@@ -441,6 +472,9 @@ public class RealizarVenta extends javax.swing.JPanel {
 
     private void EvtCancelarVenta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtCancelarVenta
         newVenta();
+        txtfClienteId.setEnabled(true);
+        txtfClienteNombre.setEnabled(true);
+        btnBuscar.setEnabled(true);
     }//GEN-LAST:event_EvtCancelarVenta
 
     private void EvtFindProducto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtFindProducto
@@ -471,7 +505,13 @@ public class RealizarVenta extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_EvtFindProductoEmpty
 
+    private void EvtNuevoAbono(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtNuevoAbono
+        new RealizarAbono(appRun, ventTemp, venddr).setVisible(true);
+        txtfSaldo.setValue(ventTemp.getSaldoPorPagar());
+    }//GEN-LAST:event_EvtNuevoAbono
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAbono;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAnonimo;
     private javax.swing.JButton btnBuscar;
@@ -484,6 +524,7 @@ public class RealizarVenta extends javax.swing.JPanel {
     private javax.swing.JLabel lblClienteNombre;
     private javax.swing.JLabel lblIdVenta;
     private javax.swing.JLabel lblProducto;
+    private javax.swing.JLabel lblSaldo;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblVendedorNombre;
     private javax.swing.JLabel lblfVendedorId;
@@ -495,6 +536,7 @@ public class RealizarVenta extends javax.swing.JPanel {
     private javax.swing.JTextField txtfClienteId;
     private javax.swing.JTextField txtfClienteNombre;
     private javax.swing.JTextField txtfIdVenta;
+    private javax.swing.JFormattedTextField txtfSaldo;
     private javax.swing.JFormattedTextField txtfTotal;
     private javax.swing.JTextField txtfVendedorId;
     private javax.swing.JTextField txtfVendedorNombre;

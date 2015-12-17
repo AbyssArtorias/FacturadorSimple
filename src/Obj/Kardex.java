@@ -106,19 +106,6 @@ public class Kardex implements Serializable {
         throw new Exception("Producto no encontrado");
     }
 
-    public ArrayList<Producto> findProductos(String nombre) {
-        ArrayList<Producto> ptmp = new ArrayList<>();
-        for (Producto producto : this.productos) {
-            if (producto.getNombre().contains(nombre)) {
-                ptmp.add(producto);
-            }
-        }
-        if (ptmp.isEmpty()) {
-            return null;
-        }
-        return ptmp;
-    }
-
     public Venta findVenta(String id) throws Exception {
         for (Venta venta : this.ventas) {
             if (venta.getIdVenta().equals(id)) {
@@ -189,6 +176,18 @@ public class Kardex implements Serializable {
             }
         }
         throw new Exception("Ningun elemento coincide con la busqueda");
+    }
+
+    public Empleado acesoEmpleado(String id, String pass) throws Exception {
+        for (Empleado etmp : this.vendedores) {
+            if (etmp.getIdentificacion().equals(id)) {
+                if (etmp.getPassword().equals(pass)) {
+                    return etmp;
+                }
+                throw new Exception("Contraseña incorrecta");
+            }
+        }
+        throw new Exception("id incorrecto");
     }
 
     public Cliente findCliente(String id) throws Exception {

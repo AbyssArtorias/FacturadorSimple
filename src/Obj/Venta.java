@@ -9,24 +9,27 @@ public class Venta implements Serializable {
 
     private Empleado vendedor;
     private Cliente cliente = null;
-    private Date fecha;
+    private Date fecha = new Date();
     private String idVenta;
     private boolean Activa = true;
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Abono> abonos = new ArrayList<>();
     private double subtotal = 0;
-    private double porPagar = 0;
+    private double saldoPorPagar = 0;
 
     public Venta(String id, Empleado persona, Cliente cliente) {
         this.idVenta = id;
         this.vendedor = persona;
         this.cliente = cliente;
-        this.fecha = new Date();
+    }
+
+    public Venta(String id, Empleado vendedor) {
+        this.idVenta = id;
+        this.vendedor = vendedor;
     }
 
     public Venta(String id) {
         this.idVenta = id;
-        this.fecha = new Date();
     }
 
     public void setFecha(Date fecha) {
@@ -85,8 +88,8 @@ public class Venta implements Serializable {
         return subtotal;
     }
 
-    public double getPorPagar() {
-        return porPagar;
+    public double getSaldoPorPagar() {
+        return saldoPorPagar;
     }
 
     public boolean isActiva() {
@@ -131,19 +134,19 @@ public class Venta implements Serializable {
 
     public void add(Item item) throws Exception {
         this.items.add(item);
-        this.porPagar = this.subtotal += item.getSubtotal();
+        this.saldoPorPagar = this.subtotal += item.getSubtotal();
     }
 
     public void add(Abono abono) throws Exception {
         this.abonos.add(abono);
-        this.porPagar -= abono.getTotalAbono();
-        if (this.porPagar == (double) 0) {
+        this.saldoPorPagar -= abono.getTotalAbono();
+        if (this.saldoPorPagar <= (double) 0) {
             this.Activa = false;
         }
     }
 
     public void remove(Item item) throws Exception {
         this.items.remove(item);
-        this.porPagar = this.subtotal -= item.getSubtotal();
+        this.saldoPorPagar = this.subtotal -= item.getSubtotal();
     }
 }
