@@ -174,7 +174,9 @@ public class Ventas extends javax.swing.JPanel {
     private void EvtAddAbono(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAddAbono
         try {
             Venta vtmp = (Venta) this.krdx.getVentas().get(this.tblTodas.getSelectedRow());
-            new RealizarAbonoVentaExistente(appRun, vtmp, empld, krdx).setVisible(true);
+            if (vtmp.isActiva()) {
+                new RealizarAbonoVentaExistente(appRun, vtmp, empld, krdx).setVisible(true);
+            }
         } catch (Exception ex) {
             Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Warning\n\n" + ex.getMessage(), this.krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
