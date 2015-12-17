@@ -7,6 +7,7 @@ package Gui;
 
 import Obj.Abono;
 import Obj.Empleado;
+import Obj.Kardex;
 import Obj.Venta;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
@@ -20,11 +21,12 @@ import javax.swing.JOptionPane;
  *
  * @author Dildo__Queen
  */
-public class RealizarAbono extends javax.swing.JFrame {
+public class RealizarAbonoVentaExistente extends javax.swing.JFrame {
 
     private MainFrame appRun;
     private Venta vnt;
     private Empleado empld;
+    private Kardex krdx = null;
 
     /**
      *
@@ -32,10 +34,11 @@ public class RealizarAbono extends javax.swing.JFrame {
      * @param venta
      * @param empleado
      */
-    public RealizarAbono(MainFrame app, Venta venta, Empleado empleado) {
+    public RealizarAbonoVentaExistente(MainFrame app, Venta venta, Empleado empleado, Kardex kardex) {
         this.appRun = app;
         this.empld = empleado;
         this.vnt = venta;
+        this.krdx = kardex;
         initComponents();
         Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
         this.setIconImage(icon);
@@ -236,8 +239,15 @@ public class RealizarAbono extends javax.swing.JFrame {
             Double abono = new Double(this.txtfAbono.getText());
             this.vnt.add(new Abono(new Date(), this.empld, abono));
             appRun.rVenta.txtfSaldo.setValue(this.vnt.getSaldoPorPagar());
+            // pls help
+            try {
+                krdx.edit(this.vnt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // pls help
         } catch (Exception ex) {
-            Logger.getLogger(RealizarAbono.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RealizarAbonoVentaExistente.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         this.appRun.vents.updateUI();

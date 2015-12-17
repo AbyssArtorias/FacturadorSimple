@@ -417,7 +417,7 @@ public class RealizarVenta extends javax.swing.JPanel {
                 this.ventTemp.setCliente(clnt);
             } catch (Exception ex) {
                 Logger.getLogger(RealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(pnlCliente, "Warning\n\n" + ex.getMessage(), this.krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Warning\n\n" + ex.getMessage(), this.krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_EvtBuscarCliente
@@ -428,6 +428,7 @@ public class RealizarVenta extends javax.swing.JPanel {
             spnCantidad.setValue(new Integer("1"));
         } catch (Exception ex) {
             Logger.getLogger(RealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Warning\n\n" + ex.getMessage(), this.krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
         }
         txtfTotal.setValue(ventTemp.getSubtotal());
         txtfSaldo.setValue(ventTemp.getSaldoPorPagar());
@@ -455,11 +456,14 @@ public class RealizarVenta extends javax.swing.JPanel {
             }
         } catch (Exception ex) {
             Logger.getLogger(RealizarVenta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Warning\n\n" + ex.getMessage(), this.krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
         }
+        this.appRun.vents.tblTodas.updateUI();
     }//GEN-LAST:event_EvtAddVenta
 
     private void EvtCancelarVenta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtCancelarVenta
         newVenta();
+        this.appRun.vents.tblTodas.updateUI();
     }//GEN-LAST:event_EvtCancelarVenta
 
     private void EvtFindProducto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtFindProducto
@@ -473,7 +477,7 @@ public class RealizarVenta extends javax.swing.JPanel {
     }//GEN-LAST:event_EvtFindProducto
 
     private void EvtNuevoAbono(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtNuevoAbono
-        new RealizarAbono(appRun, ventTemp, venddr).setVisible(true);
+        new RealizarAbonoVentanueva(appRun, ventTemp, venddr).setVisible(true);
     }//GEN-LAST:event_EvtNuevoAbono
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
