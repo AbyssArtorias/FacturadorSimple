@@ -7,10 +7,12 @@ package Gui;
 
 import Obj.Empleado;
 import Obj.Venta;
+import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class RealizarAbono extends javax.swing.JFrame {
 
-    private App ap;
+    private App appRun;
     private Venta vnt;
     private Empleado empld;
 
@@ -30,10 +32,12 @@ public class RealizarAbono extends javax.swing.JFrame {
      * @param empleado
      */
     public RealizarAbono(App app, Venta venta, Empleado empleado) {
-        this.ap = app;
+        this.appRun = app;
         this.empld = empleado;
         this.vnt = venta;
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
+        this.setIconImage(icon);
         this.setLocationRelativeTo(null);
         init();
     }
@@ -74,6 +78,8 @@ public class RealizarAbono extends javax.swing.JFrame {
         txtfAbono = new javax.swing.JTextField();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+
+        setTitle("Realizar abono");
 
         lblFecha.setText("Fecha:");
 
@@ -228,11 +234,12 @@ public class RealizarAbono extends javax.swing.JFrame {
         try {
             Double abono = new Double(this.txtfAbono.getText());
             this.vnt.add(new Obj.Abono(new Date(), this.empld, abono));
+            appRun.rVenta.txtfSaldo.setValue(this.vnt.getSaldoPorPagar());
         } catch (Exception ex) {
             Logger.getLogger(RealizarAbono.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(rootPane, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        this.ap.vents.updateUI();
+        this.appRun.vents.updateUI();
         this.dispose();
     }//GEN-LAST:event_EvtAceptar
 

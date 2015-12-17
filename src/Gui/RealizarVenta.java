@@ -507,7 +507,6 @@ public class RealizarVenta extends javax.swing.JPanel {
 
     private void EvtNuevoAbono(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtNuevoAbono
         new RealizarAbono(appRun, ventTemp, venddr).setVisible(true);
-        txtfSaldo.setValue(ventTemp.getSaldoPorPagar());
     }//GEN-LAST:event_EvtNuevoAbono
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -536,7 +535,7 @@ public class RealizarVenta extends javax.swing.JPanel {
     private javax.swing.JTextField txtfClienteId;
     private javax.swing.JTextField txtfClienteNombre;
     private javax.swing.JTextField txtfIdVenta;
-    private javax.swing.JFormattedTextField txtfSaldo;
+    public javax.swing.JFormattedTextField txtfSaldo;
     private javax.swing.JFormattedTextField txtfTotal;
     private javax.swing.JTextField txtfVendedorId;
     private javax.swing.JTextField txtfVendedorNombre;
