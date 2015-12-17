@@ -1,7 +1,9 @@
 package Obj;
 
+import Jpa.AbonoJpaController;
 import Jpa.ClienteJpaController;
 import Jpa.EmpleadoJpaController;
+import Jpa.ItemJpaController;
 import Jpa.ProductoJpaController;
 import Jpa.VentaJpaController;
 import java.io.Serializable;
@@ -19,6 +21,8 @@ public class Kardex implements Serializable {
     private ClienteJpaController clienteJPA = null;
     private ProductoJpaController productoJPA = null;
     private VentaJpaController ventaJPA = null;
+    private ItemJpaController itemJPA = null;
+    private AbonoJpaController abonoJPA = null;
 
     public Kardex(String id) throws Exception {
         if (id.equals("".trim())) {
@@ -37,6 +41,8 @@ public class Kardex implements Serializable {
         clienteJPA = new ClienteJpaController(emf);
         productoJPA = new ProductoJpaController(emf);
         ventaJPA = new VentaJpaController(emf);
+        itemJPA = new ItemJpaController(emf);
+        abonoJPA = new AbonoJpaController(emf);
     }
 
     public void setNombre(String nombre) {

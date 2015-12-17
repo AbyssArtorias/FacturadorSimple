@@ -5,6 +5,7 @@
  */
 package Gui;
 
+import Obj.Abono;
 import Obj.Empleado;
 import Obj.Venta;
 import java.awt.Image;
@@ -233,7 +234,7 @@ public class RealizarAbono extends javax.swing.JFrame {
     private void EvtAceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAceptar
         try {
             Double abono = new Double(this.txtfAbono.getText());
-            this.vnt.add(new Obj.Abono(new Date(), this.empld, abono));
+            this.vnt.add(new Abono(new Date(), this.empld, abono));
             appRun.rVenta.txtfSaldo.setValue(this.vnt.getSaldoPorPagar());
         } catch (Exception ex) {
             Logger.getLogger(RealizarAbono.class.getName()).log(Level.SEVERE, null, ex);

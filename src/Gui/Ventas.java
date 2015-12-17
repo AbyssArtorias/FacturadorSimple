@@ -7,13 +7,6 @@ package Gui;
 
 import Obj.Empleado;
 import Obj.Kardex;
-import Obj.Venta;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.table.AbstractTableModel;
 
 /**
  *
@@ -21,73 +14,26 @@ import javax.swing.table.AbstractTableModel;
  */
 public class Ventas extends javax.swing.JPanel {
 
-    private MainFrame appRun = null;
-    private Kardex krdx = null;
-    private Empleado empld = null;
+    private Kardex krdx;
+    private MainFrame appRun;
+    private Empleado empld;
 
     /**
      *
-     * @param main
      * @param kardex
      * @param empleado
+     * @param app
      */
-    public Ventas(MainFrame main, Kardex kardex, Empleado empleado) {
-        this.appRun = main;
+    public Ventas(Kardex kardex, Empleado empleado, MainFrame app) {
         this.krdx = kardex;
         this.empld = empleado;
+        this.appRun = app;
         initComponents();
-        try {
-            init();
-        } catch (Exception ex) {
-            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        init();
     }
 
-    public void init() throws Exception {
-        this.tblTodas.setModel(new AbstractTableModel() {
-            List<Venta> vstmp = krdx.getVentas();
-            String[] nmColumnas = {"Id", "Fecha", "Cliente", "Total", "Saldo a pagar"};
+    public void init() {
 
-            @Override
-            public String getColumnName(int column) {
-                return nmColumnas[column];
-            }
-
-            @Override
-            public int getRowCount() {
-                if (vstmp.isEmpty()) {
-                    return 0;
-                }
-                return vstmp.size();
-            }
-
-            @Override
-            public int getColumnCount() {
-                return nmColumnas.length;
-            }
-
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-                try {
-                    Venta vtpm = (Venta) vstmp.get(rowIndex);
-                    SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-                    if (columnIndex == 0) {
-                        return vtpm.getId();
-                    } else if (columnIndex == 1) {
-                        return f.format(vtpm.getFecha());
-                    } else if (columnIndex == 2) {
-                        return vtpm.getCliente().toString();
-                    } else if (columnIndex == 3) {
-                        return vtpm.getSubtotal();
-                    } else if (columnIndex == 4) {
-                        return vtpm.getSaldoPorPagar();
-                    }
-                } catch (Exception e) {
-                    Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, e);
-                }
-                return "";
-            }
-        });
     }
 
     /**
@@ -102,18 +48,15 @@ public class Ventas extends javax.swing.JPanel {
         pnlTodasLasVentas = new javax.swing.JPanel();
         btnAbono = new javax.swing.JButton();
         scpTodasLasVentas = new javax.swing.JScrollPane();
-        tblTodas = new javax.swing.JTable();
+        tblTodasLasVentas = new javax.swing.JTable();
+
+        setPreferredSize(new java.awt.Dimension(472, 600));
 
         pnlTodasLasVentas.setBorder(javax.swing.BorderFactory.createTitledBorder("Todas las ventas"));
 
         btnAbono.setText("Nuevo abono");
-        btnAbono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAbonoEvtNuevoAbono(evt);
-            }
-        });
 
-        tblTodas.setModel(new javax.swing.table.DefaultTableModel(
+        tblTodasLasVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -124,7 +67,7 @@ public class Ventas extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        scpTodasLasVentas.setViewportView(tblTodas);
+        scpTodasLasVentas.setViewportView(tblTodasLasVentas);
 
         javax.swing.GroupLayout pnlTodasLasVentasLayout = new javax.swing.GroupLayout(pnlTodasLasVentas);
         pnlTodasLasVentas.setLayout(pnlTodasLasVentasLayout);
@@ -167,23 +110,11 @@ public class Ventas extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAbonoEvtNuevoAbono(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbonoEvtNuevoAbono
-        try {
-            Venta vtmp = krdx.getVentas().get(tblTodas.getSelectedRow());
-            if (vtmp.isActiva()) {
-                new RealizarAbono(appRun, vtmp, empld).setVisible(true);
-            }
-        } catch (Exception e) {
-            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null, e.getMessage(), this.krdx.getNombre() + "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnAbonoEvtNuevoAbono
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbono;
     private javax.swing.JPanel pnlTodasLasVentas;
     private javax.swing.JScrollPane scpTodasLasVentas;
-    public javax.swing.JTable tblTodas;
+    public javax.swing.JTable tblTodasLasVentas;
     // End of variables declaration//GEN-END:variables
 }
