@@ -17,23 +17,23 @@ import javax.swing.ImageIcon;
 public class MainFrame extends javax.swing.JFrame {
 
     private Kardex krdx = null;
-    private Empleado venddr = null;
-    private RealizarVenta rVenta = null;
+    private Empleado empld = null;
+    public RealizarVenta rVenta = null;
     private Productos prodcts = null;
-    private Ventas vents = null;
+    public Ventas vents = null;
 
     /**
      *
      * @param kardex
-     * @param vendedor
+     * @param empleado
      * @throws Exception
      */
-    public MainFrame(Kardex kardex, Empleado vendedor) throws Exception {
+    public MainFrame(Kardex kardex, Empleado empleado) throws Exception {
         this.krdx = kardex;
-        this.venddr = vendedor;
-        this.rVenta = new RealizarVenta(this.krdx, this.venddr, this);
-        this.prodcts = new Productos(this.krdx, this.venddr);
-        this.vents = new Ventas(this.krdx);
+        this.empld = empleado;
+        this.rVenta = new RealizarVenta(this.krdx, this.empld, this);
+        this.prodcts = new Productos(this.krdx, this.empld);
+        this.vents = new Ventas(this, this.krdx, this.empld);
         initComponents();
         Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
         this.setIconImage(icon);

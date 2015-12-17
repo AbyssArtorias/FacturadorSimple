@@ -24,23 +24,28 @@ public class Venta implements Serializable {
     private Long id;
     @OneToOne
     private Empleado vendedor;
-    @OneToOne(optional = true)
+    @OneToOne
     private Cliente cliente = null;
     @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private Date fecha = new Date();
+    @Column
+    private boolean Activa = true;
     @OneToMany
     private List<Item> items = new ArrayList<>();
+    @OneToMany
+    private List<Abono> abonos = new ArrayList<>();
     @Column
     private double subtotal = 0;
+    @Column
+    private double saldoPorPagar = 0;
 
-    public Venta(Empleado persona, Cliente cliente, Date date) {
-        this.vendedor = persona;
-        this.cliente = cliente;
-        this.fecha = date;
+    public Venta(Empleado empl, Cliente clin) {
+        this.vendedor = empl;
+        this.cliente = clin;
     }
 
-    public Venta(Date date) {
-        this.fecha = date;
+    public Venta(Empleado vendedor) {
+        this.vendedor = vendedor;
     }
 
     public Venta() {
@@ -62,12 +67,24 @@ public class Venta implements Serializable {
         this.fecha = fecha;
     }
 
+    public void setActiva(boolean Activa) {
+        this.Activa = Activa;
+    }
+
     public void setItems(List<Item> items) {
         this.items = items;
     }
 
+    public void setAbonos(List<Abono> abonos) {
+        this.abonos = abonos;
+    }
+
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public void setSaldoPorPagar(double saldoPorPagar) {
+        this.saldoPorPagar = saldoPorPagar;
     }
 
     public Long getId() {
@@ -86,18 +103,29 @@ public class Venta implements Serializable {
         return fecha;
     }
 
+    public boolean isActiva() {
+        return Activa;
+    }
+
     public List<Item> getItems() {
         return items;
+    }
+
+    public List<Abono> getAbonos() {
+        return abonos;
     }
 
     public double getSubtotal() {
         return subtotal;
     }
 
+    public double getSaldoPorPagar() {
+        return saldoPorPagar;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.id);
+        int hash = 5;
         return hash;
     }
 
@@ -119,16 +147,25 @@ public class Venta implements Serializable {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return id + " : " + vendedor + " - " + cliente + " : " + sdf.format(fecha) + " = " + subtotal;
+        return id + " : " + vendedor + " - " + cliente + " : " + sdf.format(fecha) + " : " + subtotal + " : " + saldoPorPagar;
     }
 
     public void add(Item item) throws Exception {
         this.items.add(item);
-        this.subtotal += item.getSubtotal();
+        this.saldoPorPagar = this.subtotal += item.getSubtotal();
+    }
+
+    public void add(Abono abono) throws Exception {
+        this.abonos.add(abono);
+        this.saldoPorPagar -= abono.getTotalAbono();
+        if (this.saldoPorPagar <= (double) 0) {
+            this.Activa = false;
+        }
     }
 
     public void remove(Item item) throws Exception {
         this.items.remove(item);
         this.subtotal -= item.getSubtotal();
     }
+
 }

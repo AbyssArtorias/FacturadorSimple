@@ -30,7 +30,8 @@ public class Main {
             if (fl.exists()) {
                 ois = new ObjectInputStream(new FileInputStream(fl));
                 nombreInstancia = (String) ois.readObject();
-                new Login(new Kardex(nombreInstancia)).setVisible(true);
+                Kardex kr = new Kardex(nombreInstancia);
+                new Login(kr).setVisible(true);
             } else {
                 new CrearInstancia(ubicacion).setVisible(true);
             }

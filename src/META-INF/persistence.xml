@@ -8,6 +8,7 @@
     <class>Obj.Persona</class>
     <class>Obj.Producto</class>
     <class>Obj.Venta</class>
+    <class>Obj.Abono</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/kardex"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

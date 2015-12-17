@@ -5,7 +5,6 @@
  */
 package Gui;
 
-import Obj.Empleado;
 import Obj.Kardex;
 import java.awt.Image;
 import java.util.logging.Level;
@@ -20,7 +19,6 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     private Kardex krdx = null;
-    private MainFrame appRun = null;
 
     /**
      *
@@ -43,21 +41,35 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        lblUser = new javax.swing.JLabel();
-        txtfUser = new javax.swing.JTextField();
+        lblUserId = new javax.swing.JLabel();
+        lblUserPassword = new javax.swing.JLabel();
+        txtfUserId = new javax.swing.JTextField();
+        txtfUserPassword = new javax.swing.JPasswordField();
+        btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Control de ventas - micro");
+        lblUserId.setText("User Id:");
 
-        lblUser.setText("User:");
+        lblUserPassword.setText("User Password:");
 
-        txtfUser.addActionListener(new java.awt.event.ActionListener() {
+        txtfUserId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EvtAceptar(evt);
+            }
+        });
+
+        txtfUserPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtAceptar(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                evtCancelar(evt);
             }
         });
 
@@ -73,51 +85,68 @@ public class Login extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblUser)
+                        .addComponent(btnAceptar)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAceptar)
-                            .addComponent(txtfUser, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(62, Short.MAX_VALUE))
+                        .addComponent(btnCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblUserPassword)
+                            .addComponent(lblUserId))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtfUserPassword)
+                            .addComponent(txtfUserId, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblUserId)
+                    .addComponent(txtfUserId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblUser)
-                    .addComponent(txtfUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblUserPassword)
+                    .addComponent(txtfUserPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnAceptar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnAceptar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void evtCancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_evtCancelar
+        System.exit(0);
+    }//GEN-LAST:event_evtCancelar
+
     private void EvtAceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAceptar
         try {
-            Empleado vtmp = (Empleado) krdx.findEmpleado(txtfUser.getText());
-            txtfUser.setText("");
-            appRun = new MainFrame(krdx, vtmp);
-            appRun.setVisible(true);
+            String nm = txtfUserId.getText().trim();
+            String ps = new String(txtfUserPassword.getPassword());
+            new MainFrame(this.krdx, this.krdx.accesoEmpleado(nm, ps)).setVisible(true);
+            this.txtfUserId.setText("");
+            this.txtfUserPassword.setText("");
             this.setVisible(false);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Datos erróneos. Por favor, inténtelo otra vez ", "Login", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, "Ops!", e);
+        } catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage(), this.krdx.getNombre() + "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_EvtAceptar
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblUser;
-    private javax.swing.JTextField txtfUser;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JLabel lblUserId;
+    private javax.swing.JLabel lblUserPassword;
+    private javax.swing.JTextField txtfUserId;
+    private javax.swing.JPasswordField txtfUserPassword;
     // End of variables declaration//GEN-END:variables
 }

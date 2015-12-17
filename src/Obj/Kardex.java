@@ -68,6 +68,14 @@ public class Kardex implements Serializable {
         ventaJPA.create(venta);
     }
 
+    public Empleado accesoEmpleado(String id, String pass) throws Exception {
+        Empleado etmp = empleadoJPA.findEmpleado(id);
+        if (etmp.getPassword().equals(pass)) {
+            return etmp;
+        }
+        throw new Exception("Error: accesoEmpleado");
+    }
+
     public Empleado findEmpleado(String id) throws Exception {
         return empleadoJPA.findEmpleado(id);
     }
@@ -76,24 +84,27 @@ public class Kardex implements Serializable {
         return clienteJPA.findCliente(id);
     }
 
-    public List<Cliente> getClientes() {
-        return clienteJPA.findClienteEntities();
-    }
-
     public Producto findProducto(String codigo) throws Exception {
         return productoJPA.findProducto(codigo);
-    }
-
-    public List<Producto> getProductos() throws Exception {
-        return productoJPA.findProductoEntities();
     }
 
     public Venta findVenta(Long id) throws Exception {
         return ventaJPA.findVenta(id);
     }
 
+    public List<Cliente> getClientes() {
+        return clienteJPA.findClienteEntities();
+    }
+
+    public List<Producto> getProductos() throws Exception {
+        return productoJPA.findProductoEntities();
+    }
+
     public List<Venta> getVentas() throws Exception {
         return ventaJPA.findVentaEntities();
     }
 
+    public void edit(Venta venta) throws Exception {
+        ventaJPA.edit(venta);
+    }
 }

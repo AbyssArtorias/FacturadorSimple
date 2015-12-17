@@ -12,6 +12,20 @@ public abstract class Persona implements Serializable {
     private String identificacion;
     @Column(length = 50, nullable = false)
     private String nombre;
+    @Column(length = 255, nullable = true)
+    private String telefono;
+    @Column(length = 255, nullable = true)
+    private String direccion;
+
+    public Persona(String id, String nom, String tel, String dir) throws Exception {
+        if (id.equals("".trim()) || nom.equals("".trim())) {
+            throw new Exception("No se permiten parametros vacios");
+        }
+        this.identificacion = id;
+        this.nombre = nom;
+        this.telefono = tel;
+        this.direccion = dir;
+    }
 
     public Persona(String id, String nombre) throws Exception {
         if (id.equals("".trim()) || nombre.equals("".trim())) {
@@ -24,12 +38,20 @@ public abstract class Persona implements Serializable {
     public Persona() {
     }
 
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getNombre() {
@@ -38,6 +60,14 @@ public abstract class Persona implements Serializable {
 
     public String getIdentificacion() {
         return identificacion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
     }
 
     @Override

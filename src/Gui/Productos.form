@@ -24,11 +24,11 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="pnlTodosLosProductos" max="32767" attributes="0"/>
-                  <Component id="pnlProductoNuevo" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="pnlProductoNuevo" alignment="0" max="32767" attributes="0"/>
+                  <Component id="pnlProductos" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -40,7 +40,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pnlProductoNuevo" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="pnlTodosLosProductos" max="32767" attributes="0"/>
+              <Component id="pnlProductos" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -61,26 +61,28 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="lblProductoCosto" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblProductoDescripcion" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblProductoNombre" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblProductoId" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtfProductoDescripcion" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtfProductoNombre" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtfProductoId" min="-2" pref="120" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtfProductoCosto" min="-2" pref="120" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnProductoAceptar" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="0" pref="135" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblNuevoCodigo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txtfNuevoCodigo" min="-2" pref="120" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="lblNuevoNombre" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txtfNuevoNombre" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblNuevoDescripcion" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txtfNuevoDescripcion" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblNuevoCosto" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txtfNuevoCosto" min="-2" pref="140" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnNuevoProducto" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="141" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -92,24 +94,21 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblProductoId" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtfProductoId" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblNuevoCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtfNuevoCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblNuevoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtfNuevoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblProductoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtfProductoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblNuevoDescripcion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtfNuevoDescripcion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblProductoDescripcion" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtfProductoDescripcion" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblProductoCosto" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtfProductoCosto" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnProductoAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblNuevoCosto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnNuevoProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtfNuevoCosto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -117,42 +116,48 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lblProductoId">
+        <Component class="javax.swing.JLabel" name="lblNuevoCodigo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Id:"/>
+            <Property name="text" type="java.lang.String" value="Codigo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblProductoNombre">
+        <Component class="javax.swing.JLabel" name="lblNuevoNombre">
           <Properties>
             <Property name="text" type="java.lang.String" value="Nombre:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblProductoDescripcion">
+        <Component class="javax.swing.JLabel" name="lblNuevoDescripcion">
           <Properties>
             <Property name="text" type="java.lang.String" value="Descripcion:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblProductoCosto">
+        <Component class="javax.swing.JLabel" name="lblNuevoCosto">
           <Properties>
             <Property name="text" type="java.lang.String" value="Costo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtfProductoId">
+        <Component class="javax.swing.JTextField" name="txtfNuevoCodigo">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtfProductoNombre">
+        <Component class="javax.swing.JTextField" name="txtfNuevoNombre">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtfProductoDescripcion">
+        <Component class="javax.swing.JTextField" name="txtfNuevoDescripcion">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtfProductoCosto">
+        <Component class="javax.swing.JTextField" name="txtfNuevoCosto">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EvtAddProducto"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnProductoAceptar">
+        <Component class="javax.swing.JButton" name="btnNuevoProducto">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Aceptar"/>
+            <Property name="text" type="java.lang.String" value="Guardar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EvtAddProducto"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="pnlTodosLosProductos">
+    <Container class="javax.swing.JPanel" name="pnlProductos">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -166,23 +171,23 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                  <Component id="scpTodosLosProductos" pref="420" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="333" max="32767" attributes="0"/>
+                  <Component id="scpTodosLosProductos" pref="371" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+        <Container class="javax.swing.JScrollPane" name="scpTodosLosProductos">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>

@@ -3,10 +3,8 @@ package Obj;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "emp.id", query = "SELECT e FROM Persona e WHERE e.identificacion = :identificacion")
 public class Empleado extends Persona implements Serializable {
 
     @Column(length = 255, nullable = true)
@@ -24,8 +22,11 @@ public class Empleado extends Persona implements Serializable {
     public Empleado() {
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String pass) throws Exception {
+        if (pass.length() < 3) {
+            throw new Exception("Contraseña debil");
+        }
+        this.password = pass;
     }
 
     public String getPassword() {
