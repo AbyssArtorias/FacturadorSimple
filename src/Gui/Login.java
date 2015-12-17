@@ -6,8 +6,10 @@
 package Gui;
 
 import Obj.Kardex;
+import java.awt.Image;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +27,8 @@ public class Login extends javax.swing.JFrame {
     public Login(Kardex kardex) {
         this.krdx = kardex;
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/Media/002.png")).getImage();
+        this.setIconImage(icon);
         this.setLocationRelativeTo(null);
     }
 
