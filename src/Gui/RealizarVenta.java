@@ -97,8 +97,9 @@ public class RealizarVenta extends javax.swing.JPanel {
         txtfClienteId.setText("");
         txtfClienteNombre.setText("");
         txtfProductoId.setText("");
-        txtfTotal.setValue("");
-        txtfSaldo.setValue("");
+        txtfProductoDescripcion.setText("");
+        txtfTotal.setText("");
+        txtfSaldo.setText("");
         txtfIdVenta.setText(ventTemp.getId() + "");
         txtfClienteId.setEnabled(true);
         txtfClienteNombre.setEnabled(true);
