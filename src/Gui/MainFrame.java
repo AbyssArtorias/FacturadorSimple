@@ -20,6 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Empleado empld = null;
     public RealizarVenta rVenta = null;
     private Productos prodcts = null;
+    private Clientes clints = null;
     public Ventas vents = null;
 
     /**
@@ -33,6 +34,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.empld = empleado;
         this.rVenta = new RealizarVenta(this.krdx, this.empld, this);
         this.prodcts = new Productos(this.krdx, this.empld);
+        this.clints = new Clientes(this.krdx);
         this.vents = new Ventas(this.krdx, this.empld, this);
         initComponents();
         Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
@@ -42,8 +44,10 @@ public class MainFrame extends javax.swing.JFrame {
         tbpPrincipal.setTitleAt(0, "Realizar venta");
         tbpPrincipal.add(prodcts);
         tbpPrincipal.setTitleAt(1, "Productos");
+        tbpPrincipal.add(clints);
+        tbpPrincipal.setTitleAt(2, "Clientes");
         tbpPrincipal.add(vents);
-        tbpPrincipal.setTitleAt(2, "Ventas");
+        tbpPrincipal.setTitleAt(3, "Ventas");
     }
 
     /**

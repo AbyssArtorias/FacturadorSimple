@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -23,6 +24,7 @@ import javax.persistence.TemporalType;
  * @author Dildo__Queen
  */
 @Entity
+@Table(name = "ABONO")
 public class Abono implements Serializable {
 
     @Id

@@ -101,6 +101,8 @@ public class Productos extends javax.swing.JPanel {
         txtfNuevoCosto = new javax.swing.JTextField();
         btnNuevoProducto = new javax.swing.JButton();
         pnlProductos = new javax.swing.JPanel();
+        btnEditar = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
         scpTodosLosProductos = new javax.swing.JScrollPane();
         tblTodos = new javax.swing.JTable();
 
@@ -181,6 +183,10 @@ public class Productos extends javax.swing.JPanel {
 
         pnlProductos.setBorder(javax.swing.BorderFactory.createTitledBorder("Todos los productos"));
 
+        btnEditar.setText("Editar");
+
+        btnBorrar.setText("Eliminar");
+
         tblTodos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -200,14 +206,24 @@ public class Productos extends javax.swing.JPanel {
             pnlProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProductosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scpTodosLosProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                .addGroup(pnlProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scpTodosLosProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProductosLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBorrar)))
                 .addContainerGap())
         );
         pnlProductosLayout.setVerticalGroup(
             pnlProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlProductosLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProductosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scpTodosLosProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                .addGroup(pnlProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBorrar)
+                    .addComponent(btnEditar))
+                .addGap(18, 18, 18)
+                .addComponent(scpTodosLosProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -254,6 +270,8 @@ public class Productos extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNuevoProducto;
     private javax.swing.JLabel lblNuevoCodigo;
     private javax.swing.JLabel lblNuevoCosto;

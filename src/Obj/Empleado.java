@@ -3,8 +3,10 @@ package Obj;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "EMPLEADO")
 public class Empleado extends Persona implements Serializable {
 
     @Column(length = 255, nullable = true)

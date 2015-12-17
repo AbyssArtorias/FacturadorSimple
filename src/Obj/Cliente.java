@@ -2,8 +2,10 @@ package Obj;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "CLIENTE")
 public class Cliente extends Persona implements Serializable {
 
     public Cliente(String id, String nom, String tel, String dir) throws Exception {
