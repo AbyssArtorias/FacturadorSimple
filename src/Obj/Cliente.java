@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CLIENTE")
+@Table(name = "CLIENTES")
 public class Cliente extends Persona implements Serializable {
 
     public Cliente(String id, String nom, String tel, String dir) throws Exception {

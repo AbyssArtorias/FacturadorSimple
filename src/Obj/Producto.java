@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PRODUCTO")
+@Table(name = "PRODUCTOS")
 public class Producto implements Serializable {
 
     @Id
@@ -19,7 +19,7 @@ public class Producto implements Serializable {
     @Column
     private double costo;
 
-    public Producto(String codigo, String nombre, String descripcion, float costo) throws Exception {
+    public Producto(String codigo, String nombre, String descripcion, double costo) throws Exception {
         if (codigo.equals("".trim()) || nombre.equals("".trim()) || descripcion.equals("".trim()) || "".trim().equals(costo)) {
             throw new Exception("No se permiten parametros vacios");
         }
@@ -96,10 +96,10 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return codigo + " - " + nombre + ": " + costo;
+        return codigo + " - " + nombre + "  $ " + costo;
     }
 
-    public void modify(String nombre, String descripcion, float costo) {
+    public void modify(String nombre, String descripcion, double costo) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.costo = costo;

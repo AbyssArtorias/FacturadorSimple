@@ -34,7 +34,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.empld = empleado;
         this.rVenta = new RealizarVenta(this.krdx, this.empld, this);
         this.prodcts = new Productos(this.krdx, this.empld);
-        this.clints = new Clientes(this.krdx);
+        this.clints = new Clientes(this.krdx, this.empld);
         this.vents = new Ventas(this.krdx, this.empld, this);
         initComponents();
         Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();

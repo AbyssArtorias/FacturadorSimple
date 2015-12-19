@@ -21,6 +21,7 @@ public class Productos extends javax.swing.JPanel {
 
     private Kardex krdx = null;
     private Empleado empld = null;
+    private Producto prodctTmp = null;
 
     /**
      *
@@ -35,6 +36,8 @@ public class Productos extends javax.swing.JPanel {
     }
 
     public void init() {
+        this.btnEliminar.setEnabled(this.empld.isAdministrator());
+        this.btnEditar.setEnabled(this.empld.isAdministrator());
         this.tblTodos.setModel(new AbstractTableModel() {
             String[] nmColumnas = {"Codigo", "Nombre", "Costo", "Descripcion"};
 
@@ -102,7 +105,7 @@ public class Productos extends javax.swing.JPanel {
         btnNuevoProducto = new javax.swing.JButton();
         pnlProductos = new javax.swing.JPanel();
         btnEditar = new javax.swing.JButton();
-        btnBorrar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         scpTodosLosProductos = new javax.swing.JScrollPane();
         tblTodos = new javax.swing.JTable();
 
@@ -184,8 +187,18 @@ public class Productos extends javax.swing.JPanel {
         pnlProductos.setBorder(javax.swing.BorderFactory.createTitledBorder("Todos los productos"));
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtEditar(evt);
+            }
+        });
 
-        btnBorrar.setText("Eliminar");
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtEliminar(evt);
+            }
+        });
 
         tblTodos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -212,7 +225,7 @@ public class Productos extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnEditar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBorrar)))
+                        .addComponent(btnEliminar)))
                 .addContainerGap())
         );
         pnlProductosLayout.setVerticalGroup(
@@ -220,7 +233,7 @@ public class Productos extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProductosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBorrar)
+                    .addComponent(btnEliminar)
                     .addComponent(btnEditar))
                 .addGap(18, 18, 18)
                 .addComponent(scpTodosLosProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
@@ -251,27 +264,65 @@ public class Productos extends javax.swing.JPanel {
 
     private void EvtAddProducto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAddProducto
         try {
-            String codigo = txtfNuevoCodigo.getText().toUpperCase();
-            String nombre = txtfNuevoNombre.getText();
-            String descripcion = txtfNuevoDescripcion.getText();
-            String costo = txtfNuevoCosto.getText().trim();
-            Producto ptmp = new Producto(codigo, nombre, descripcion, Float.parseFloat(costo));
-            krdx.add(ptmp);
-            txtfNuevoCodigo.setText("");
-            txtfNuevoNombre.setText("");
-            txtfNuevoDescripcion.setText("");
-            txtfNuevoCosto.setText("");
+            if (prodctTmp != null) {
+                prodctTmp.setNombre(txtfNuevoNombre.getText().trim());
+                prodctTmp.setDescripcion(txtfNuevoDescripcion.getText().trim());
+                prodctTmp.setCosto(Double.parseDouble(txtfNuevoCosto.getText().trim()));
+                this.krdx.edit(prodctTmp);
+                this.prodctTmp = null;
+                txtfNuevoCodigo.setText("");
+                txtfNuevoNombre.setText("");
+                txtfNuevoDescripcion.setText("");
+                txtfNuevoCosto.setText("");
+            } else {
+                krdx.add(new Producto(txtfNuevoCodigo.getText().toUpperCase(), txtfNuevoNombre.getText().trim(), txtfNuevoDescripcion.getText().trim(), Double.parseDouble(txtfNuevoCosto.getText().trim())));
+                txtfNuevoCodigo.setText("");
+                txtfNuevoNombre.setText("");
+                txtfNuevoDescripcion.setText("");
+                txtfNuevoCosto.setText("");
+            }
             tblTodos.updateUI();
         } catch (Exception ex) {
             Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(btnNuevoProducto, "La operacion no se pudo completar\n\n" + ex.getMessage(), krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "La operacion no se pudo completar\n\n" + ex.getMessage(), krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_EvtAddProducto
 
+    private void EvtEditar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtEditar
+        try {
+            this.prodctTmp = (Producto) this.krdx.getProductos().get(this.tblTodos.getSelectedRow());
+            this.txtfNuevoCodigo.setText(this.prodctTmp.getCodigo());
+            this.txtfNuevoNombre.setText(this.prodctTmp.getNombre());
+            this.txtfNuevoDescripcion.setText(this.prodctTmp.getDescripcion());
+            this.txtfNuevoCosto.setText(this.prodctTmp.getCosto() + "");
+        } catch (Exception ex) {
+            Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "La operacion no se pudo completar\n\n" + ex.getMessage(), krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_EvtEditar
+
+    private void EvtEliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtEliminar
+        try {
+            int a;
+            this.prodctTmp = (Producto) this.krdx.getProductos().get(this.tblTodos.getSelectedRow());
+            a = JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar el producto: \n" + prodctTmp.toString(), "Eliminar producto", JOptionPane.WARNING_MESSAGE);
+            if (a == 0) {
+                this.krdx.remove(prodctTmp);
+                tblTodos.updateUI();
+                this.prodctTmp = null;
+            } else {
+                JOptionPane.showMessageDialog(null, "Operacion cancelada", "Eliminar producto", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "La operacion no se pudo completar\n\n" + ex.getMessage(), krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_EvtEliminar
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevoProducto;
     private javax.swing.JLabel lblNuevoCodigo;
     private javax.swing.JLabel lblNuevoCosto;

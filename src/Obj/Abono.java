@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
  * @author Dildo__Queen
  */
 @Entity
-@Table(name = "ABONO")
+@Table(name = "ABONOS")
 public class Abono implements Serializable {
 
     @Id

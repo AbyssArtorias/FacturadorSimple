@@ -98,7 +98,7 @@ public class Kardex implements Serializable {
         return ventaJPA.findVenta(id);
     }
 
-    public List<Cliente> getClientes() {
+    public List<Cliente> getClientes() throws Exception {
         return clienteJPA.findClienteEntities();
     }
 
@@ -112,5 +112,21 @@ public class Kardex implements Serializable {
 
     public void edit(Venta venta) throws Exception {
         ventaJPA.edit(venta);
+    }
+
+    public void edit(Producto producto) throws Exception {
+        productoJPA.edit(producto);
+    }
+
+    public void edit(Cliente cliente) throws Exception {
+        clienteJPA.edit(cliente);
+    }
+
+    public void remove(Producto producto) throws Exception {
+        productoJPA.destroy(producto.getCodigo());
+    }
+
+    public void remove(Cliente cliente) throws Exception {
+        clienteJPA.destroy(cliente.getIdentificacion());
     }
 }

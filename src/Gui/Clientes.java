@@ -7,6 +7,7 @@ package Gui;
 
 import Obj.Kardex;
 import Obj.Cliente;
+import Obj.Empleado;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,19 +20,24 @@ import javax.swing.table.AbstractTableModel;
 public class Clientes extends javax.swing.JPanel {
 
     private Kardex krdx = null;
-    private Cliente ctmp;
+    private Empleado empld = null;
+    private Cliente clintTmp;
 
     /**
      *
      * @param kardex
+     * @param emplado
      */
-    public Clientes(Kardex kardex) {
+    public Clientes(Kardex kardex, Empleado emplado) {
         this.krdx = kardex;
+        this.empld = emplado;
         initComponents();
         init();
     }
 
     public void init() {
+        this.btnEliminar.setEnabled(this.empld.isAdministrator());
+        this.btnEditar.setEnabled(this.empld.isAdministrator());
         this.tblTodos.setModel(new AbstractTableModel() {
             String[] nmColumnas = {"Identificacion", "Nombre", "Telefono", "Direccion"};
 
@@ -184,8 +190,18 @@ public class Clientes extends javax.swing.JPanel {
         pnlClientes.setBorder(javax.swing.BorderFactory.createTitledBorder("Todos los productos"));
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtEditar(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtEliminar(evt);
+            }
+        });
 
         tblTodos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -251,22 +267,59 @@ public class Clientes extends javax.swing.JPanel {
 
     private void EvtAddProducto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAddProducto
         try {
-            String id = txtfLClienteId.getText().toUpperCase();
-            String nombre = txtfClienteNombre.getText();
-            String telefono = txtfClienteTelefono.getText();
-            String direccion = txtfClienteDireccion.getText().trim();
-            ctmp = new Cliente(id, nombre, telefono, telefono);
-            krdx.add(ctmp);
-            txtfLClienteId.setText("");
-            txtfClienteNombre.setText("");
-            txtfClienteTelefono.setText("");
-            txtfClienteDireccion.setText("");
+            if (clintTmp != null) {
+                clintTmp.setNombre(txtfClienteNombre.getText().trim());
+                clintTmp.setTelefono(txtfClienteTelefono.getText().trim());
+                clintTmp.setDireccion(txtfClienteDireccion.getText().trim());
+                this.krdx.edit(clintTmp);
+                this.clintTmp = null;
+                txtfLClienteId.setText("");
+                txtfClienteNombre.setText("");
+                txtfClienteTelefono.setText("");
+                txtfClienteDireccion.setText("");
+            } else {
+                krdx.add(new Cliente(txtfLClienteId.getText().toUpperCase(), txtfClienteNombre.getText().trim(), txtfClienteTelefono.getText().trim(), txtfClienteDireccion.getText().trim()));
+                txtfLClienteId.setText("");
+                txtfClienteNombre.setText("");
+                txtfClienteTelefono.setText("");
+                txtfClienteDireccion.setText("");
+            }
             tblTodos.updateUI();
         } catch (Exception ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "La operacion no se pudo completar\n\n" + ex.getMessage(), krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_EvtAddProducto
+
+    private void EvtEditar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtEditar
+        try {
+            this.clintTmp = (Cliente) this.krdx.getClientes().get(this.tblTodos.getSelectedRow());
+            this.txtfLClienteId.setText(this.clintTmp.getIdentificacion());
+            this.txtfClienteNombre.setText(this.clintTmp.getNombre());
+            this.txtfClienteTelefono.setText(this.clintTmp.getTelefono());
+            this.txtfClienteDireccion.setText(this.clintTmp.getDireccion());
+        } catch (Exception ex) {
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "La operacion no se pudo completar\n\n" + ex.getMessage(), krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_EvtEditar
+
+    private void EvtEliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtEliminar
+        try {
+            int a;
+            this.clintTmp = (Cliente) this.krdx.getClientes().get(this.tblTodos.getSelectedRow());
+            a = JOptionPane.showConfirmDialog(null, "Esta seguro que desea eliminar el cliente: \n" + clintTmp.toString(), "Eliminar producto", JOptionPane.WARNING_MESSAGE);
+            if (a == 0) {
+                this.krdx.remove(clintTmp);
+                tblTodos.updateUI();
+                this.clintTmp = null;
+            }else{
+                JOptionPane.showMessageDialog(null, "Operacion cancelada", "Eliminar cliente", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_EvtEliminar
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

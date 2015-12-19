@@ -5,12 +5,15 @@
  */
 package Gui;
 
+import Gui.FramesAux.RealizarAbonoVentanueva;
 import Obj.Cliente;
 import Obj.Empleado;
 import Obj.Item;
 import Obj.Kardex;
 import Obj.Producto;
 import Obj.Venta;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,7 +26,7 @@ import javax.swing.table.AbstractTableModel;
 public class RealizarVenta extends javax.swing.JPanel {
 
     private Kardex krdx = null;
-    private Empleado venddr = null;
+    private Empleado empld = null;
     private Cliente clnt = null;
     private Venta ventTemp = null;
     private Producto prodctTemp = null;
@@ -37,18 +40,17 @@ public class RealizarVenta extends javax.swing.JPanel {
      */
     public RealizarVenta(Kardex kardex, Empleado vendedor, MainFrame app) {
         this.krdx = kardex;
-        this.venddr = vendedor;
+        this.empld = vendedor;
         this.appRun = app;
-        this.ventTemp = new Venta(this.venddr, clnt);
+        this.ventTemp = new Venta(this.empld, clnt);
         initComponents();
         init();
     }
 
     public void init() {
-
-        txtfIdVenta.setText(this.ventTemp.getId() + "");
-        txtfVendedorId.setText(this.venddr.getIdentificacion());
-        txtfVendedorNombre.setText(this.venddr.getNombre());
+        txtfIdVenta.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+        txtfVendedorId.setText(this.empld.getIdentificacion());
+        txtfVendedorNombre.setText(this.empld.getNombre());
         tblVentas.setModel(new AbstractTableModel() {
             String[] nmColumnas = {"Codigo", "Nombre", "Cantidad", "Valor unitario", "Subtotal"};
 
@@ -91,7 +93,7 @@ public class RealizarVenta extends javax.swing.JPanel {
     }
 
     public void newVenta() {
-        ventTemp = new Venta(this.venddr, clnt);
+        ventTemp = new Venta(this.empld, clnt);
         tblVentas.updateUI();
         clnt = null;
         txtfClienteId.setText("");
@@ -100,7 +102,6 @@ public class RealizarVenta extends javax.swing.JPanel {
         txtfProductoDescripcion.setText("");
         txtfTotal.setText("");
         txtfSaldo.setText("");
-        txtfIdVenta.setText(ventTemp.getId() + "");
         txtfClienteId.setEnabled(true);
         txtfClienteNombre.setEnabled(true);
         btnBuscar.setEnabled(true);
@@ -147,7 +148,7 @@ public class RealizarVenta extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(472, 603));
 
-        lblFecha.setText("IdVenta:");
+        lblFecha.setText("Fecha:");
 
         lblfVendedorId.setText("Identificacion:");
 
@@ -477,7 +478,7 @@ public class RealizarVenta extends javax.swing.JPanel {
     }//GEN-LAST:event_EvtFindProducto
 
     private void EvtNuevoAbono(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtNuevoAbono
-        new RealizarAbonoVentanueva(appRun, ventTemp, venddr).setVisible(true);
+        new RealizarAbonoVentanueva(appRun, ventTemp, empld).setVisible(true);
     }//GEN-LAST:event_EvtNuevoAbono
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
