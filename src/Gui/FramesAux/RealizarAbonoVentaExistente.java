@@ -28,6 +28,7 @@ public class RealizarAbonoVentaExistente extends javax.swing.JFrame {
     private Venta vnt;
     private Empleado empld;
     private Kardex krdx = null;
+    private DetalleVenta dv = null;
 
     /**
      *
@@ -41,13 +42,31 @@ public class RealizarAbonoVentaExistente extends javax.swing.JFrame {
         this.vnt = venta;
         this.krdx = kardex;
         initComponents();
-        Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
-        this.setIconImage(icon);
-        this.setLocationRelativeTo(null);
+        init();
+    }
+
+    /**
+     *
+     * @param app
+     * @param venta
+     * @param empleado
+     * @param kardex
+     * @param detalleVenta
+     */
+    public RealizarAbonoVentaExistente(MainFrame app, Venta venta, Empleado empleado, Kardex kardex, DetalleVenta detalleVenta) {
+        this.appRun = app;
+        this.empld = empleado;
+        this.vnt = venta;
+        this.krdx = kardex;
+        this.dv = detalleVenta;
+        initComponents();
         init();
     }
 
     public void init() {
+        Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
+        this.setIconImage(icon);
+        this.setLocationRelativeTo(null);
         SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
         this.txtfFecha.setText(f.format(new Date()));
         this.txtfEmpleadoId.setText(this.empld.getIdentificacion());
@@ -84,7 +103,9 @@ public class RealizarAbonoVentaExistente extends javax.swing.JFrame {
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Realizar abono");
+        setMinimumSize(new java.awt.Dimension(505, 279));
 
         lblFecha.setText("Fecha:");
 
@@ -135,16 +156,16 @@ public class RealizarAbonoVentaExistente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtfIdVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtfIdVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(lblTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtfTotal))
+                        .addComponent(txtfTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtfSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtfAbono, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(txtfSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                            .addComponent(txtfAbono, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+                        .addGap(197, 197, 197)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -187,9 +208,9 @@ public class RealizarAbonoVentaExistente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblEmpleadoId)
                             .addComponent(lblFecha))
@@ -197,17 +218,15 @@ public class RealizarAbonoVentaExistente extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtfFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtfEmpleadoId, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtfEmpleadoId, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(lblEmpleadoNombre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtfEmpleadoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAceptar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelar)
+                                .addComponent(txtfEmpleadoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCancelar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -240,6 +259,9 @@ public class RealizarAbonoVentaExistente extends javax.swing.JFrame {
             Double abono = new Double(this.txtfAbono.getText());
             this.vnt.add(new Abono(new Date(), this.empld, abono));
             appRun.rVenta.txtfSaldo.setValue(this.vnt.getSaldoPorPagar());
+            if (dv != null) {
+                dv.txtfSaldo.setValue(vnt.getSaldoPorPagar());
+            }
             // pls help
             try {
                 krdx.edit(this.vnt);

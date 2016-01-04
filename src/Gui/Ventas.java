@@ -5,12 +5,12 @@
  */
 package Gui;
 
+import Gui.FramesAux.DetalleVenta;
 import Gui.FramesAux.RealizarAbonoVentaExistente;
 import Obj.Empleado;
 import Obj.Kardex;
 import Obj.Venta;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -103,6 +103,7 @@ public class Ventas extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlTodasLasVentas = new javax.swing.JPanel();
+        btnDetalleVenta = new javax.swing.JButton();
         btnAbono = new javax.swing.JButton();
         scpTodasLasVentas = new javax.swing.JScrollPane();
         tblTodas = new javax.swing.JTable();
@@ -110,6 +111,13 @@ public class Ventas extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(472, 600));
 
         pnlTodasLasVentas.setBorder(javax.swing.BorderFactory.createTitledBorder("Todas las ventas"));
+
+        btnDetalleVenta.setText("Detalle venta");
+        btnDetalleVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvtDetalleVenta(evt);
+            }
+        });
 
         btnAbono.setText("Nuevo abono");
         btnAbono.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +149,8 @@ public class Ventas extends javax.swing.JPanel {
                     .addComponent(scpTodasLasVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTodasLasVentasLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnDetalleVenta)
+                        .addGap(18, 18, 18)
                         .addComponent(btnAbono)))
                 .addContainerGap())
         );
@@ -148,7 +158,9 @@ public class Ventas extends javax.swing.JPanel {
             pnlTodasLasVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTodasLasVentasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAbono)
+                .addGroup(pnlTodasLasVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAbono)
+                    .addComponent(btnDetalleVenta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(scpTodasLasVentas, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                 .addContainerGap())
@@ -185,9 +197,23 @@ public class Ventas extends javax.swing.JPanel {
         tblTodas.updateUI();
     }//GEN-LAST:event_EvtAddAbono
 
+    private void EvtDetalleVenta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtDetalleVenta
+        try {
+            Venta vtmp = (Venta) this.krdx.getVentas().get(this.tblTodas.getSelectedRow());
+            if (vtmp.isActiva()) {
+                new DetalleVenta(appRun, vtmp, empld, krdx).setVisible(true);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Warning\n\n" + ex.getMessage(), this.krdx.getNombre() + " Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        tblTodas.updateUI();
+    }//GEN-LAST:event_EvtDetalleVenta
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbono;
+    private javax.swing.JButton btnDetalleVenta;
     private javax.swing.JPanel pnlTodasLasVentas;
     private javax.swing.JScrollPane scpTodasLasVentas;
     public javax.swing.JTable tblTodas;

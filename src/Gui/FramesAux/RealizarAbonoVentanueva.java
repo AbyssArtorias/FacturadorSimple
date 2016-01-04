@@ -8,7 +8,6 @@ package Gui.FramesAux;
 import Gui.MainFrame;
 import Obj.Abono;
 import Obj.Empleado;
-import Obj.Kardex;
 import Obj.Venta;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
@@ -41,13 +40,14 @@ public class RealizarAbonoVentanueva extends javax.swing.JFrame {
         this.vnt = venta;
     
         initComponents();
-        Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
-        this.setIconImage(icon);
-        this.setLocationRelativeTo(null);
+        
         init();
     }
 
     public void init() {
+        Image icon = new ImageIcon(getClass().getResource("/Media/003.png")).getImage();
+        this.setIconImage(icon);
+        this.setLocationRelativeTo(null);
         SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
         this.txtfFecha.setText(f.format(new Date()));
         this.txtfEmpleadoId.setText(this.empld.getIdentificacion());
@@ -84,7 +84,9 @@ public class RealizarAbonoVentanueva extends javax.swing.JFrame {
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Realizar abono");
+        setMinimumSize(new java.awt.Dimension(505, 279));
 
         lblFecha.setText("Fecha:");
 
