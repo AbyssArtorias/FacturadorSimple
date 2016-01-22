@@ -121,7 +121,7 @@ public class DetalleVenta extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(480, 460));
+        setMinimumSize(new java.awt.Dimension(480, 470));
 
         lblVentaId.setText("IdVenta:");
 
@@ -183,15 +183,14 @@ public class DetalleVenta extends javax.swing.JFrame {
                                 .addComponent(lblVentaId))
                             .addComponent(lblCliente, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtfVentaId)
                                 .addGap(18, 18, 18)
                                 .addComponent(lblFechaVenta)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtfFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtfCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblVendedor)
                         .addGap(18, 18, 18)
