@@ -22,7 +22,7 @@ public class Main {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             if ("Windows".equals(os[0])) {
-                ubicacion = "C:/Kardex.dat";
+                ubicacion = "D:/Kardex.dat";
             } else if ("Linux".equals(os[0])) {
                 ubicacion = home + "/Documentos/Kardex.dat";
             }

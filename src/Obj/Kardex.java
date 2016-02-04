@@ -6,6 +6,7 @@ import Jpa.EmpleadoJpaController;
 import Jpa.ItemJpaController;
 import Jpa.ProductoJpaController;
 import Jpa.VentaJpaController;
+import Jpa.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
@@ -76,7 +77,11 @@ public class Kardex implements Serializable {
 
     public Empleado accesoEmpleado(String id, String pass) throws Exception {
         Empleado etmp = empleadoJPA.findEmpleado(id);
+        if (etmp == null) {
+            throw new NonexistentEntityException("Error: No hay empleados registrados");
+        }
         if (etmp.getPassword().equals(pass)) {
+
             return etmp;
         }
         throw new Exception("Error: accesoEmpleado");

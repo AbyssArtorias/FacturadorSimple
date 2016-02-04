@@ -5,6 +5,8 @@
  */
 package Gui;
 
+import Jpa.exceptions.NonexistentEntityException;
+import Obj.Empleado;
 import Obj.Kardex;
 import java.awt.Image;
 import java.util.logging.Level;
@@ -19,6 +21,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     private Kardex krdx = null;
+    private int op = -1;
 
     /**
      *
@@ -129,13 +132,29 @@ public class Login extends javax.swing.JFrame {
 
     private void EvtAceptar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvtAceptar
         try {
+            
             String nm = txtfUserId.getText().trim();
             String ps = new String(txtfUserPassword.getPassword());
+            if(op==0){
+                this.krdx.add(new Empleado(nm, nm, ps));
+                JOptionPane.showMessageDialog(null, "Se ha creado el usuario satisfactoriamente");
+                op=-1;
+                
+            }
             new MainFrame(this.krdx, this.krdx.accesoEmpleado(nm, ps)).setVisible(true);
             this.txtfUserId.setText("");
             this.txtfUserPassword.setText("");
             this.setVisible(false);
-        } catch (Exception ex) {
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+             op= JOptionPane.showConfirmDialog(rootPane, ex.getMessage() + " Desea crear el usuario?", this.krdx.getNombre() + "Error", JOptionPane.ERROR_MESSAGE);
+            if(op==0) {
+                JOptionPane.showMessageDialog(null, "vamos a crear el usuario, por favor introduce en los mismos campos el usuario y la contraseña");
+                
+            }else{
+                //nada por ahora 
+            }
+        }catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(rootPane, ex.getMessage(), this.krdx.getNombre() + "Error", JOptionPane.ERROR_MESSAGE);
         }
